@@ -167,6 +167,7 @@ nav {
 
 .service-card:hover {
     transform: translateY(-4px);
+    background: linear-gradient(160deg, rgba(0, 255, 157, 0.06) 0%, rgba(61, 90, 254, 0.06) 100%);
 }
 
 .service-card h3 {
@@ -408,5 +409,184 @@ footer {
     
     .contact-details {
         text-align: left;
+    }
+}
+
+.service-link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}
+
+/* Service Detail Pages */
+.service-detail {
+    padding: var(--space-xl) 0;
+}
+
+.service-intro {
+    max-width: 800px;
+    margin: 0 auto var(--space-xl);
+    text-align: center;
+}
+
+.service-intro h2 {
+    color: var(--color-primary);
+    font-size: 2.5rem;
+    margin-bottom: var(--space-md);
+}
+
+.service-intro p {
+    color: var(--color-text-secondary);
+    font-size: 1.25rem;
+    line-height: 1.7;
+}
+
+.feature-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: var(--space-lg);
+    margin-bottom: var(--space-xl);
+}
+
+.feature-card {
+    background: var(--gradient-card);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    padding: var(--space-lg);
+    transition: transform 0.3s ease;
+}
+
+.feature-card:hover {
+    transform: translateY(-4px);
+}
+
+.feature-icon {
+    font-size: 2.5rem;
+    margin-bottom: var(--space-sm);
+}
+
+.feature-card h3 {
+    color: var(--color-primary);
+    font-size: 1.5rem;
+    margin-bottom: var(--space-sm);
+}
+
+.feature-card p {
+    color: var(--color-text-secondary);
+    margin-bottom: var(--space-md);
+    line-height: 1.6;
+}
+
+.feature-card ul {
+    list-style: none;
+    padding: 0;
+}
+
+.feature-card li {
+    color: var(--color-text-secondary);
+    margin-bottom: var(--space-xs);
+    padding-left: var(--space-md);
+    position: relative;
+}
+
+.feature-card li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--color-primary);
+}
+
+.tech-stack {
+    text-align: center;
+    margin-bottom: var(--space-xl);
+}
+
+.tech-stack h2 {
+    color: var(--color-primary);
+    font-size: 2rem;
+    margin-bottom: var(--space-lg);
+}
+
+.tech-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: var(--space-md);
+}
+
+.tech-item {
+    background: var(--gradient-card);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    padding: var(--space-sm);
+    font-family: var(--font-heading);
+    color: var(--color-text-secondary);
+    transition: all 0.3s ease;
+}
+
+.tech-item:hover {
+    border-color: var(--color-primary);
+    color: var(--color-text);
+    transform: translateY(-2px);
+}
+
+.approach-section {
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.approach-section h2 {
+    color: var(--color-primary);
+    font-size: 2rem;
+    text-align: center;
+    margin-bottom: var(--space-lg);
+}
+
+.approach-steps {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: var(--space-lg);
+}
+
+.step {
+    text-align: center;
+    position: relative;
+}
+
+.step-number {
+    font-family: var(--font-heading);
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--color-primary);
+    opacity: 0.3;
+    display: block;
+    margin-bottom: var(--space-xs);
+}
+
+.step h3 {
+    color: var(--color-primary);
+    font-size: 1.25rem;
+    margin-bottom: var(--space-sm);
+}
+
+.step p {
+    color: var(--color-text-secondary);
+}
+
+/* Responsive adjustments for service detail pages */
+@media (max-width: 768px) {
+    .service-intro {
+        padding: 0 var(--space-md);
+    }
+    
+    .feature-grid {
+        gap: var(--space-md);
+    }
+    
+    .feature-card {
+        padding: var(--space-md);
+    }
+    
+    .approach-steps {
+        gap: var(--space-md);
     }
 }
