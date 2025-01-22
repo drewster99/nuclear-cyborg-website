@@ -1,0 +1,4 @@
+/.well-known/apple-app-site-association
+    content-type: application/json;charset=utf-8
+    cache-control: no-cache, no-store, max-age=0
+    strict-transport-security: max-age=631138519

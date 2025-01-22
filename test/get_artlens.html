@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="google-adsense-account" content="ca-pub-3322174655633417">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3322174655633417" crossorigin="anonymous"></script>
+</head>
+<script>
+function openAppElseOpenStore() {
+    let userAgent = navigator.userAgent || navigator.vendor || window.opera;
+    let platform = navigator.platform;
+    console.log("User agent: " + userAgent);
+    console.log("Platform: " + platform);
+
+    if (/android/i.test(userAgent)) {
+        // deep link
+        console.log("doTheThing: android: deep link or Google Play in 1 second");
+        window.location = "artlens://exhibition/sfs";
+
+        setTimeout(function () {
+                console.log("doTheThing: timer: opening Google Play");
+                window.location = "https://play.google.com/store/apps/details?id=org.clevelandart.artlens";
+            }, 1000);
+
+    } else if ((/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1)) {
+        console.log("doTheThing: opening App Store");
+        window.location = "https://apps.apple.com/us/app/artlens/id580839935";
+    }
+}
+</script>
+</head>
+<body onload="openAppElseOpenStore()"></body>
+</html>

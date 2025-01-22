@@ -1,0 +1,17 @@
+{
+   "applinks" : {
+      "details" : [
+         {
+            "appID" : "P8MA38JTXY.com.AndrewBenson.ColorCannon",
+            "components" : [
+               {
+                  "/" : "/color-match-cannons"
+               }
+            ],
+            "default" : {
+               "caseSensitive" : false
+            }
+         }
+      ]
+   }
+}
