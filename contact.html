@@ -29,7 +29,7 @@
                 </a>
                 <div class="nav-links">
                     <a href="/" class="nav-link">Home</a>
-                    <a href="contact.html" class="contact-button">Contact Us</a>
+                    <a href="mailto:support@nuclearcyborg.com?subject=Contact%20Request" class="contact-button">Contact Us</a>
                 </div>
             </nav>
             <div class="hero-content">
@@ -55,7 +55,7 @@
                 </div>
             </div>
             
-            <form id="contact-form" class="contact-form">
+            <form id="contact-form" class="contact-form" onsubmit="sendEmail(event)">
                 <div class="form-group">
                     <input type="text" id="input-name" name="name" placeholder="Your Name" required>
                 </div>
@@ -79,46 +79,33 @@
                         <span>Nuclear Cyborg Corp</span>
                     </a>
                 </div>
+                <div class="footer-links">
+                    <a href="https://nuclearcyborg.com/privacy">Privacy Policy</a>
+                    <a href="https://nuclearcyborg.com/terms">Terms of Use</a>
+                    <a href="https://nuclearcyborg.com/refunds">Refund Policy</a>
+                </div>
                 <p class="copyright">&copy; 2015-2025 Nuclear Cyborg Corp</p>
             </div>
         </div>
     </footer>
 
     <script>
-        document.getElementById('contact-form').addEventListener('submit', async (e) => {
+        function sendEmail(e) {
             e.preventDefault();
-            const button = document.getElementById('input-submit');
-            const originalText = button.textContent;
-            button.disabled = true;
-            button.textContent = 'Sending...';
-
-            try {
-                const response = await fetch('/api/contact', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        name: document.getElementById('input-name').value,
-                        email: document.getElementById('input-email').value,
-                        message: document.getElementById('input-message').value,
-                    }),
-                });
-
-                if (response.ok) {
-                    alert('Thank you! We will contact you soon.');
-                    e.target.reset();
-                } else {
-                    throw new Error('Failed to send message');
-                }
-            } catch (error) {
-                alert('Sorry, there was an error. Please try again later.');
-                console.error('Error:', error);
-            } finally {
-                button.disabled = false;
-                button.textContent = originalText;
-            }
-        });
+            
+            const name = document.getElementById('input-name').value;
+            const email = document.getElementById('input-email').value;
+            const message = document.getElementById('input-message').value;
+            
+            const mailtoSubject = encodeURIComponent('Consultation Request');
+            const mailtoBody = encodeURIComponent(
+                `Contact name: ${name}\n` +
+                `Contact email: ${email}\n` +
+                `Message: ${message}`
+            );
+            
+            window.location.href = `mailto:hello@nuclearcyborg.com?subject=${mailtoSubject}&body=${mailtoBody}`;
+        }
     </script>
 </body>
 </html>

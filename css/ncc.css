@@ -80,12 +80,17 @@ nav {
     justify-content: space-between;
     align-items: center;
     padding: var(--space-sm) 0;
+    position: relative;
+    z-index: 1;
 }
 
 .logo {
     display: flex;
     align-items: center;
     gap: var(--space-sm);
+    position: relative;
+    z-index: 1;
+    text-decoration: none;
 }
 
 .logo-image {
@@ -116,10 +121,21 @@ nav {
     text-decoration: none;
     font-weight: 600;
     transition: transform 0.2s ease;
+    cursor: pointer;
+    display: inline-block;
 }
 
 .contact-button:hover {
     transform: translateY(-2px);
+}
+
+.contact-button:active {
+    transform: translateY(0);
+}
+
+.contact-button:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px var(--color-primary);
 }
 
 /* Hero Content */
@@ -245,8 +261,10 @@ footer {
 
 .footer-content {
     display: flex;
+    flex-direction: column;
     justify-content: space-between;
     align-items: center;
+    gap: var(--space-md);
 }
 
 .footer-logo {
@@ -268,6 +286,22 @@ footer {
 
 .copyright {
     color: var(--color-text-secondary);
+}
+
+.footer-links {
+    display: flex;
+    gap: var(--space-md);
+    font-size: 0.875rem;
+}
+
+.footer-links a {
+    color: var(--color-text-secondary);
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.footer-links a:hover {
+    color: var(--color-primary);
 }
 
 /* Responsive Design */
@@ -594,4 +628,12 @@ footer {
     .approach-steps {
         gap: var(--space-md);
     }
+}
+
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+    position: relative;
+    z-index: 1;
 }
