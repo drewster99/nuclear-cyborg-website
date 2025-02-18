@@ -1,0 +1,35 @@
+<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <!-- Neural Network Nodes -->
+    <circle cx="24" cy="8" r="3" fill="url(#gradient1)"/>
+    <circle cx="12" cy="24" r="3" fill="url(#gradient1)"/>
+    <circle cx="36" cy="24" r="3" fill="url(#gradient1)"/>
+    <circle cx="24" cy="40" r="3" fill="url(#gradient1)"/>
+    <circle cx="24" cy="24" r="4" fill="url(#gradient2)"/>
+    
+    <!-- Neural Connections -->
+    <path d="M24 11L12 21M24 11L36 21M12 27L24 37M36 27L24 37M24 28L24 36M24 12L24 20" 
+          stroke="url(#gradient3)" stroke-width="1.5">
+        <animate attributeName="stroke-dasharray" values="0,100;100,0" dur="3s" repeatCount="indefinite"/>
+    </path>
+    
+    <!-- Pulse Effects -->
+    <circle cx="24" cy="24" r="6" stroke="url(#gradient1)" stroke-width="0.5" opacity="0.5">
+        <animate attributeName="r" values="6;12;6" dur="2s" repeatCount="indefinite"/>
+        <animate attributeName="opacity" values="0.5;0;0.5" dur="2s" repeatCount="indefinite"/>
+    </circle>
+    
+    <defs>
+        <linearGradient id="gradient1" x1="0" y1="0" x2="48" y2="48" gradientUnits="userSpaceOnUse">
+            <stop offset="0%" stop-color="#00ff9d"/>
+            <stop offset="100%" stop-color="#3d5afe"/>
+        </linearGradient>
+        <radialGradient id="gradient2" cx="24" cy="24" r="4" gradientUnits="userSpaceOnUse">
+            <stop offset="0%" stop-color="#00ff9d"/>
+            <stop offset="100%" stop-color="#3d5afe"/>
+        </radialGradient>
+        <linearGradient id="gradient3" x1="24" y1="8" x2="24" y2="40" gradientUnits="userSpaceOnUse">
+            <stop offset="0%" stop-color="#00ff9d"/>
+            <stop offset="100%" stop-color="#3d5afe"/>
+        </linearGradient>
+    </defs>
+</svg> 

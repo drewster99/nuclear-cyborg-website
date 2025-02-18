@@ -91,7 +91,12 @@ nav {
 .logo-image {
     width: 48px;
     height: 48px;
-    border-radius: 12px;
+    filter: drop-shadow(0 0 8px rgba(0, 255, 157, 0.2));
+    transition: filter 0.3s ease;
+}
+
+.logo-image:hover {
+    filter: drop-shadow(0 0 12px rgba(0, 255, 157, 0.4));
 }
 
 .logo-text {
@@ -253,7 +258,7 @@ footer {
 .footer-logo-image {
     width: 36px;
     height: 36px;
-    border-radius: 8px;
+    filter: drop-shadow(0 0 6px rgba(0, 255, 157, 0.2));
 }
 
 .footer-logo span {

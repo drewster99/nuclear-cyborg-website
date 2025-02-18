@@ -1,0 +1,26 @@
+<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <!-- Outer hexagon -->
+    <path d="M24 2L42.8 13V35L24 46L5.2 35V13L24 2Z" stroke="url(#gradient1)" stroke-width="2"/>
+    <!-- Inner circuit paths -->
+    <path d="M24 8L36 15V29L24 36L12 29V15L24 8Z" stroke="url(#gradient2)" stroke-width="1.5"/>
+    <!-- Central node -->
+    <circle cx="24" cy="24" r="4" fill="url(#gradient3)"/>
+    <!-- Circuit lines -->
+    <path d="M24 12V20M24 28V32M16 20L20 24M28 24L32 20" stroke="#00ff9d" stroke-width="1.5"/>
+    
+    <!-- Gradients -->
+    <defs>
+        <linearGradient id="gradient1" x1="0" y1="0" x2="48" y2="48" gradientUnits="userSpaceOnUse">
+            <stop offset="0%" stop-color="#00ff9d"/>
+            <stop offset="100%" stop-color="#3d5afe"/>
+        </linearGradient>
+        <linearGradient id="gradient2" x1="12" y1="8" x2="36" y2="36" gradientUnits="userSpaceOnUse">
+            <stop offset="0%" stop-color="#00ff9d"/>
+            <stop offset="100%" stop-color="#3d5afe"/>
+        </linearGradient>
+        <radialGradient id="gradient3" cx="24" cy="24" r="4" gradientUnits="userSpaceOnUse">
+            <stop offset="0%" stop-color="#00ff9d"/>
+            <stop offset="100%" stop-color="#3d5afe"/>
+        </radialGradient>
+    </defs>
+</svg> 

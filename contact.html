@@ -23,11 +23,14 @@
     <div class="hero">
         <header class="container">
             <nav>
-                <a href="index.html" class="logo">
-                    <img src="images/nuclear-cyborg.jpg" alt="Nuclear Cyborg Corp logo" class="logo-image">
+                <a href="/" class="logo">
+                    <img src="images/logo.svg" alt="Nuclear Cyborg Corp logo" class="logo-image">
                     <span class="logo-text">Nuclear Cyborg</span>
                 </a>
-                <a href="index.html" class="nav-link">Home</a>
+                <div class="nav-links">
+                    <a href="/" class="nav-link">Home</a>
+                    <a href="contact.html" class="contact-button">Contact Us</a>
+                </div>
             </nav>
             <div class="hero-content">
                 <h1>Let's Work Together</h1>
@@ -52,15 +55,15 @@
                 </div>
             </div>
             
-            <form class="contact-form">
+            <form id="contact-form" class="contact-form">
                 <div class="form-group">
-                    <input type="text" id="input-name" placeholder="Your Name" required>
+                    <input type="text" id="input-name" name="name" placeholder="Your Name" required>
                 </div>
                 <div class="form-group">
-                    <input type="email" id="input-email" placeholder="Email Address" required>
+                    <input type="email" id="input-email" name="email" placeholder="Email Address" required>
                 </div>
                 <div class="form-group">
-                    <textarea id="input-message" placeholder="Tell us about your project" required></textarea>
+                    <textarea id="input-message" name="message" placeholder="Tell us about your project" required></textarea>
                 </div>
                 <button type="submit" id="input-submit">Send Message</button>
             </form>
@@ -71,12 +74,51 @@
         <div class="container">
             <div class="footer-content">
                 <div class="footer-logo">
-                    <img src="images/nuclear-cyborg.jpg" alt="Nuclear Cyborg Corp logo" class="footer-logo-image">
-                    <span>Nuclear Cyborg Corp</span>
+                    <a href="/">
+                        <img src="images/logo.svg" alt="Nuclear Cyborg Corp logo" class="footer-logo-image">
+                        <span>Nuclear Cyborg Corp</span>
+                    </a>
                 </div>
                 <p class="copyright">&copy; 2015-2025 Nuclear Cyborg Corp</p>
             </div>
         </div>
     </footer>
+
+    <script>
+        document.getElementById('contact-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const button = document.getElementById('input-submit');
+            const originalText = button.textContent;
+            button.disabled = true;
+            button.textContent = 'Sending...';
+
+            try {
+                const response = await fetch('/api/contact', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        name: document.getElementById('input-name').value,
+                        email: document.getElementById('input-email').value,
+                        message: document.getElementById('input-message').value,
+                    }),
+                });
+
+                if (response.ok) {
+                    alert('Thank you! We will contact you soon.');
+                    e.target.reset();
+                } else {
+                    throw new Error('Failed to send message');
+                }
+            } catch (error) {
+                alert('Sorry, there was an error. Please try again later.');
+                console.error('Error:', error);
+            } finally {
+                button.disabled = false;
+                button.textContent = originalText;
+            }
+        });
+    </script>
 </body>
 </html>

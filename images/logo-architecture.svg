@@ -1,0 +1,37 @@
+<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <!-- Microservices Containers -->
+    <rect x="8" y="8" width="10" height="10" rx="2" stroke="url(#gradient1)" stroke-width="1.5"/>
+    <rect x="30" y="8" width="10" height="10" rx="2" stroke="url(#gradient1)" stroke-width="1.5"/>
+    <rect x="8" y="30" width="10" height="10" rx="2" stroke="url(#gradient1)" stroke-width="1.5"/>
+    <rect x="30" y="30" width="10" height="10" rx="2" stroke="url(#gradient1)" stroke-width="1.5"/>
+    
+    <!-- Central Hub -->
+    <circle cx="24" cy="24" r="6" fill="url(#gradient2)"/>
+    
+    <!-- Connecting Lines with Animation -->
+    <path d="M13 18L13 30M35 18L35 30M18 13L30 13M18 35L30 35" 
+          stroke="url(#gradient3)" stroke-width="1.5" stroke-dasharray="2 2">
+        <animate attributeName="stroke-dashoffset" values="0;-8" dur="1s" repeatCount="indefinite"/>
+    </path>
+    
+    <!-- Data Flow Particles -->
+    <circle cx="24" cy="24" r="8" stroke="url(#gradient1)" stroke-width="0.5" opacity="0.3">
+        <animate attributeName="r" values="8;12;8" dur="2s" repeatCount="indefinite"/>
+        <animate attributeName="opacity" values="0.3;0;0.3" dur="2s" repeatCount="indefinite"/>
+    </circle>
+    
+    <defs>
+        <linearGradient id="gradient1" x1="8" y1="8" x2="40" y2="40" gradientUnits="userSpaceOnUse">
+            <stop offset="0%" stop-color="#00ff9d"/>
+            <stop offset="100%" stop-color="#3d5afe"/>
+        </linearGradient>
+        <radialGradient id="gradient2" cx="24" cy="24" r="6" gradientUnits="userSpaceOnUse">
+            <stop offset="0%" stop-color="#00ff9d"/>
+            <stop offset="100%" stop-color="#3d5afe"/>
+        </radialGradient>
+        <linearGradient id="gradient3" x1="24" y1="13" x2="24" y2="35" gradientUnits="userSpaceOnUse">
+            <stop offset="0%" stop-color="#00ff9d"/>
+            <stop offset="100%" stop-color="#3d5afe"/>
+        </linearGradient>
+    </defs>
+</svg> 
