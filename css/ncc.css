@@ -114,8 +114,8 @@ nav {
 }
 
 .contact-button {
-    background: var(--gradient-cta);
-    color: var(--color-background);
+    background: var(--color-secondary);
+    color: var(--color-text);
     padding: 0.75em 1.5em;
     border-radius: 8px;
     text-decoration: none;
@@ -238,8 +238,8 @@ nav {
 
 .cta-button {
     display: inline-block;
-    background: var(--gradient-cta);
-    color: var(--color-background);
+    background: var(--color-secondary);
+    color: var(--color-text);
     padding: 1em 2em;
     border-radius: 8px;
     text-decoration: none;
@@ -278,12 +278,22 @@ footer {
     vertical-align: middle;
 }
 
+.footer-logo a {
+    text-decoration: none;
+    color: inherit;
+}
+
 .footer-logo span {
     font-family: var(--font-heading);
     font-weight: 500;
     font-size: 1.25rem;
     line-height: 36px;
     vertical-align: middle;
+    color: var(--color-text);
+}
+
+.footer-logo a:visited {
+    color: inherit;
 }
 
 .footer-links {
@@ -409,8 +419,8 @@ footer {
 
 .contact-form button {
     width: 100%;
-    background: var(--gradient-cta);
-    color: var(--color-background);
+    background: var(--color-secondary);
+    color: var(--color-text);
     border: none;
     border-radius: 8px;
     padding: 1em;
