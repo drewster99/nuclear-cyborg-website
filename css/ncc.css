@@ -260,38 +260,38 @@ footer {
 }
 
 .footer-content {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-    gap: var(--space-md);
+    text-align: center;
 }
 
 .footer-logo {
     display: flex;
     align-items: center;
+    justify-content: center;
     gap: var(--space-sm);
+    margin-bottom: var(--space-md);
 }
 
 .footer-logo-image {
     width: 36px;
     height: 36px;
     filter: drop-shadow(0 0 6px rgba(0, 255, 157, 0.2));
+    vertical-align: middle;
 }
 
 .footer-logo span {
     font-family: var(--font-heading);
     font-weight: 500;
-}
-
-.copyright {
-    color: var(--color-text-secondary);
+    font-size: 1.25rem;
+    line-height: 36px;
+    vertical-align: middle;
 }
 
 .footer-links {
     display: flex;
+    justify-content: center;
     gap: var(--space-md);
     font-size: 0.875rem;
+    margin-bottom: var(--space-md);
 }
 
 .footer-links a {
@@ -304,12 +304,17 @@ footer {
     color: var(--color-primary);
 }
 
+.copyright {
+    color: var(--color-text-secondary);
+    margin-top: var(--space-sm);
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
-    .footer-content {
+    .footer-links {
         flex-direction: column;
-        gap: var(--space-md);
-        text-align: center;
+        align-items: center;
+        gap: var(--space-sm);
     }
     
     .service-card {
