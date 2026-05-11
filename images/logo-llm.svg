@@ -1,0 +1,41 @@
+<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <!-- Token Embeddings -->
+    <path d="M24 4L44 16V32L24 44L4 32V16L24 4Z" stroke="url(#gradient1)" stroke-width="1.5" fill="none"/>
+    
+    <!-- Attention Heads -->
+    <circle cx="16" cy="20" r="3" fill="url(#gradient2)"/>
+    <circle cx="32" cy="20" r="3" fill="url(#gradient2)"/>
+    <circle cx="24" cy="32" r="3" fill="url(#gradient2)"/>
+    
+    <!-- Attention Lines -->
+    <path d="M16 20L32 20M16 20L24 32M32 20L24 32" 
+          stroke="url(#gradient3)" stroke-width="1" opacity="0.6">
+        <animate attributeName="opacity" values="0.6;0.2;0.6" dur="2s" repeatCount="indefinite"/>
+    </path>
+    
+    <!-- Token Flow -->
+    <path d="M24 8L24 16" stroke="#00ff9d" stroke-width="1.5" stroke-dasharray="2 2">
+        <animate attributeName="stroke-dashoffset" values="0;-8" dur="1s" repeatCount="indefinite"/>
+    </path>
+    
+    <!-- Processing Rings -->
+    <circle cx="24" cy="24" r="12" stroke="url(#gradient1)" stroke-width="0.5" opacity="0.3">
+        <animate attributeName="r" values="12;14;12" dur="3s" repeatCount="indefinite"/>
+        <animate attributeName="opacity" values="0.3;0.1;0.3" dur="3s" repeatCount="indefinite"/>
+    </circle>
+    
+    <defs>
+        <linearGradient id="gradient1" x1="4" y1="4" x2="44" y2="44" gradientUnits="userSpaceOnUse">
+            <stop offset="0%" stop-color="#00ff9d"/>
+            <stop offset="100%" stop-color="#3d5afe"/>
+        </linearGradient>
+        <radialGradient id="gradient2" cx="24" cy="24" r="3" gradientUnits="userSpaceOnUse">
+            <stop offset="0%" stop-color="#00ff9d"/>
+            <stop offset="100%" stop-color="#3d5afe"/>
+        </radialGradient>
+        <linearGradient id="gradient3" x1="16" y1="20" x2="32" y2="32" gradientUnits="userSpaceOnUse">
+            <stop offset="0%" stop-color="#00ff9d"/>
+            <stop offset="100%" stop-color="#3d5afe"/>
+        </linearGradient>
+    </defs>
+</svg> 

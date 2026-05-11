@@ -1,0 +1,40 @@
+<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <!-- Robot Head Base -->
+    <path d="M10 14L24 6L38 14V34L24 42L10 34V14Z" stroke="url(#gradient1)" stroke-width="2"/>
+    
+    <!-- Eye -->
+    <circle cx="24" cy="22" r="6" fill="none" stroke="url(#gradient2)" stroke-width="1.5">
+        <animate attributeName="r" values="6;5;6" dur="2s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="24" cy="22" r="2" fill="url(#gradient3)">
+        <animate attributeName="opacity" values="1;0.5;1" dur="1s" repeatCount="indefinite"/>
+    </circle>
+    
+    <!-- Circuit Details -->
+    <path d="M16 28H32M24 28V34" stroke="#00ff9d" stroke-width="1.5"/>
+    <path d="M15 20L19 16M33 20L29 16" stroke="#3d5afe" stroke-width="1.5"/>
+    
+    <!-- Energy Core -->
+    <circle cx="24" cy="34" r="3" fill="url(#gradient4)">
+        <animate attributeName="opacity" values="1;0.7;1" dur="1.5s" repeatCount="indefinite"/>
+    </circle>
+    
+    <defs>
+        <linearGradient id="gradient1" x1="10" y1="6" x2="38" y2="42" gradientUnits="userSpaceOnUse">
+            <stop offset="0%" stop-color="#00ff9d"/>
+            <stop offset="100%" stop-color="#3d5afe"/>
+        </linearGradient>
+        <linearGradient id="gradient2" x1="18" y1="16" x2="30" y2="28" gradientUnits="userSpaceOnUse">
+            <stop offset="0%" stop-color="#00ff9d"/>
+            <stop offset="100%" stop-color="#3d5afe"/>
+        </linearGradient>
+        <radialGradient id="gradient3" cx="24" cy="22" r="2" gradientUnits="userSpaceOnUse">
+            <stop offset="0%" stop-color="#00ff9d"/>
+            <stop offset="100%" stop-color="#3d5afe"/>
+        </radialGradient>
+        <radialGradient id="gradient4" cx="24" cy="34" r="3" gradientUnits="userSpaceOnUse">
+            <stop offset="0%" stop-color="#ff2d55"/>
+            <stop offset="100%" stop-color="#ff2d55" stop-opacity="0"/>
+        </radialGradient>
+    </defs>
+</svg> 
