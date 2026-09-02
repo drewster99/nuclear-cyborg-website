@@ -536,6 +536,15 @@
             min-width: 0;
         }
 
+        .apply-actions-verified {
+            flex-wrap: wrap;
+            row-gap: var(--space-sm);
+        }
+
+        .apply-turnstile {
+            flex: 1 0 100%;
+        }
+
         .apply-platform {
             margin: 0 0 var(--space-sm);
             min-width: 0;
@@ -1088,7 +1097,8 @@
                         <label for="apply-comments">Anything else? <span class="optional">(optional)</span></label>
                         <textarea class="apply-input" id="apply-comments" name="comments" placeholder="Questions, what you're publishing, how you'd use it…" data-limit="comments"></textarea>
                     </div>
-                    <div class="apply-field apply-actions">
+                    <div class="apply-field apply-actions apply-actions-verified">
+                        <div class="apply-turnstile" data-turnstile></div>
                         <span class="apply-hint">That's everything.</span>
                         <button type="submit" class="apply-button" data-apply-finish>Finish</button>
                     </div>
@@ -1136,10 +1146,15 @@
         </div>
     </dialog>
 
+    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit&onload=onTurnstileReady" async defer></script>
     <script type="module">
         import { COUNTRIES, NOT_ON_PLATFORM, PLATFORMS, TEXT_LIMITS, isPlausibleEmailAddress, isPlausiblePhoneNumber } from "./application-form-options.js";
 
         const APPLY_ENDPOINT = "/apps/scheduler/apply";
+
+        /* Public Turnstile site key for nuclearcyborg.com. Pairs with the
+         * TURNSTILE_SECRET Worker secret — swapping one means swapping both. */
+        const TURNSTILE_SITE_KEY = "1x00000000000000000000AA";
         const dialog = document.getElementById("get-started-dialog");
         const form = document.getElementById("apply-form");
         const steps = Array.from(form.querySelectorAll(".apply-step"));
@@ -1149,9 +1164,14 @@
         const phoneInput = document.getElementById("apply-phone");
         const emailInput = document.getElementById("apply-email");
 
+        let turnstileWidget = null;
+
         buildPlatformFields();
         buildCountryOptions();
         applyTextLimits();
+        /* api.js is async, so it may call back before or after this module runs. */
+        window.onTurnstileReady = () => renderTurnstileIfPresent(activeStep());
+        renderTurnstileIfPresent(activeStep());
 
         document.querySelectorAll("[data-dialog-open]").forEach((trigger) => {
             trigger.addEventListener("click", (event) => {
@@ -1253,7 +1273,44 @@
             const button = step.querySelector(".apply-actions .apply-button");
             if (!button) return;
             const visibleFields = Array.from(step.querySelectorAll(".apply-field.is-visible")).filter((field) => !field.classList.contains("apply-actions"));
-            button.disabled = !visibleFields.every((field) => field.dataset.complete === "optional" || isFieldComplete(field));
+            const answersReady = visibleFields.every((field) => field.dataset.complete === "optional" || isFieldComplete(field));
+            button.disabled = !answersReady || !challengePassed(step);
+        }
+
+        /* Only the final step carries a challenge; the others pass straight through. */
+        function challengePassed(step) {
+            return step.querySelector("[data-turnstile]") === null || turnstileToken() !== "";
+        }
+
+        /* Rendered only once the applicant reaches the step that carries it:
+         * Turnstile won't lay out inside a display:none step, and a challenge
+         * solved at page load can expire before it is ever submitted. */
+        function renderTurnstileIfPresent(step) {
+            if (step.querySelector("[data-turnstile]")) renderTurnstile();
+        }
+
+        function renderTurnstile() {
+            if (turnstileWidget !== null || !window.turnstile) return;
+            turnstileWidget = window.turnstile.render("[data-turnstile]", {
+                sitekey: TURNSTILE_SITE_KEY,
+                action: "scheduler-application",
+                callback: () => { hideError(); refreshActionButton(activeStep()); },
+                "expired-callback": () => refreshActionButton(activeStep()),
+                "error-callback": () => {
+                    showError("The verification challenge couldn't load. Allow challenges.cloudflare.com, or email support@nuclearcyborg.com.");
+                    refreshActionButton(activeStep());
+                },
+            });
+        }
+
+        function turnstileToken() {
+            if (turnstileWidget === null) return "";
+            return window.turnstile.getResponse(turnstileWidget) || "";
+        }
+
+        /* Tokens are single-use: any outcome other than success needs a fresh one. */
+        function resetTurnstile() {
+            if (turnstileWidget !== null) window.turnstile.reset(turnstileWidget);
         }
 
         function activeStep() {
@@ -1269,6 +1326,7 @@
             next.classList.add("is-active");
             progressSegments.forEach((segment, segmentIndex) => segment.classList.toggle("is-done", segmentIndex <= index));
             dialog.querySelector(".apply-card").scrollTop = 0;
+            renderTurnstileIfPresent(next);
             refreshActionButton(next);
             focusFirstInput(next);
         }
@@ -1295,8 +1353,10 @@
                     advanceStep();
                     return;
                 }
+                resetTurnstile();
                 showError(await errorTextFrom(response));
             } catch (_) {
+                resetTurnstile();
                 showError("We couldn't reach the server. Check your connection and try again.");
             } finally {
                 finishButton.textContent = "Finish";
@@ -1331,6 +1391,7 @@
                 phone: String(data.get("phone")).trim(),
                 countryCode: data.get("countryCode"),
                 comments: String(data.get("comments")).trim(),
+                turnstileToken: turnstileToken(),
                 platforms,
             };
         }
@@ -1347,6 +1408,7 @@
 
         function resetForm() {
             form.reset();
+            resetTurnstile();
             hideError();
             steps.forEach((step, index) => step.classList.toggle("is-active", index === 0));
             progressSegments.forEach((segment) => segment.classList.remove("is-done"));

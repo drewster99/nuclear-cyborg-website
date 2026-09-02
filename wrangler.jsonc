@@ -19,6 +19,19 @@
   "compatibility_flags": [
     "nodejs_compat"
   ],
+  // Per-IP throttle in front of the public application endpoint. `period` may
+  // only be 10 or 60; counters are per Cloudflare location, so the effective
+  // global rate is higher than `limit` and this is a flood brake, not a quota.
+  "ratelimits": [
+    {
+      "name": "APPLY_RATE_LIMITER",
+      "namespace_id": "1001",
+      "simple": {
+        "limit": 5,
+        "period": 60
+      }
+    }
+  ],
   // Storage for "Get started" applications. Create the database once with
   //   npx wrangler d1 create scheduler-applications
   // then paste the returned database_id here and apply db/migrations with

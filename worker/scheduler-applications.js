@@ -4,6 +4,14 @@
  * Submissions land in the D1 database bound as SCHEDULER_APPLICATIONS_DB
  * (schema in db/migrations). One application per email address; a repeat
  * submission is answered with 409 rather than stored twice.
+ *
+ * The endpoint is public and writes personal data, so it is gated twice before
+ * it touches the database: a per-IP rate limit (APPLY_RATE_LIMITER) sheds
+ * floods, and a Cloudflare Turnstile token proves a browser is behind the
+ * request. Both are required — a missing binding or secret fails the request
+ * rather than waving it through.
+ *
+ * Cloudflare setup: `npx wrangler secret put TURNSTILE_SECRET`.
  */
 
 import {
@@ -16,6 +24,13 @@ import {
 } from "../apps/scheduler/application-form-options.js";
 
 export const APPLY_PATH = "/apps/scheduler/apply";
+
+const TURNSTILE_VERIFY_URL = "https://challenges.cloudflare.com/turnstile/v0/siteverify";
+
+/* Rate-limit bucket for requests that arrive without a client IP. They share
+ * one counter deliberately: unattributable traffic is throttled together
+ * rather than each getting a fresh allowance. */
+const UNATTRIBUTED_CLIENT_KEY = "no-client-ip";
 
 const COUNTRY_CODES = new Set(COUNTRIES.map(([code]) => code));
 
@@ -30,6 +45,22 @@ export async function handleSchedulerApplication(request, env) {
     return jsonResponse(500, { error: "Application storage is not configured. Please email support@nuclearcyborg.com." });
   }
 
+  const rateLimiter = env.APPLY_RATE_LIMITER;
+  if (!rateLimiter) {
+    console.error("APPLY_RATE_LIMITER binding is missing; refusing to accept applications unthrottled");
+    return jsonResponse(500, { error: "Applications are temporarily unavailable. Please email support@nuclearcyborg.com." });
+  }
+  if (!env.TURNSTILE_SECRET) {
+    console.error("TURNSTILE_SECRET is not configured; refusing to accept applications unverified");
+    return jsonResponse(500, { error: "Applications are temporarily unavailable. Please email support@nuclearcyborg.com." });
+  }
+
+  const clientAddress = request.headers.get("cf-connecting-ip");
+  const { success: withinRateLimit } = await rateLimiter.limit({ key: clientAddress || UNATTRIBUTED_CLIENT_KEY });
+  if (!withinRateLimit) {
+    return jsonResponse(429, { error: "Too many attempts. Please wait a minute and try again." });
+  }
+
   let body;
   try {
     body = await request.json();
@@ -42,6 +73,13 @@ export async function handleSchedulerApplication(request, env) {
     return jsonResponse(400, { error: validation.error });
   }
   const application = validation.application;
+
+  /* Last gate before the write: the token is single-use and short-lived, so it
+   * is spent only once the answers themselves are known to be good. */
+  const challengePassed = await turnstileTokenIsValid(application.turnstileToken, env.TURNSTILE_SECRET, clientAddress);
+  if (!challengePassed) {
+    return jsonResponse(403, { error: "We couldn't verify that you're human. Please try the challenge again." });
+  }
 
   const id = crypto.randomUUID();
   const submittedAt = new Date().toISOString();
@@ -129,6 +167,10 @@ function validateApplication(body) {
   const comments = optionalText(body.comments, "Comments", TEXT_LIMITS.comments);
   if (comments.error) return { ok: false, error: comments.error };
 
+  if (typeof body.turnstileToken !== "string" || body.turnstileToken === "") {
+    return { ok: false, error: "Please complete the \"I'm not a robot\" challenge." };
+  }
+
   const submittedPlatforms = body.platforms;
   if (!submittedPlatforms || typeof submittedPlatforms !== "object") {
     return { ok: false, error: "Follower counts are missing." };
@@ -162,9 +204,47 @@ function validateApplication(body) {
       phone: phone.value,
       countryCode: body.countryCode,
       comments: comments.value,
+      turnstileToken: body.turnstileToken,
       platforms,
     },
   };
+}
+
+/**
+ * Asks Cloudflare whether a Turnstile token is genuine, unexpired and unspent.
+ * Anything other than an explicit success — including a siteverify outage —
+ * fails the submission; this is the gate, so it does not fall open.
+ */
+async function turnstileTokenIsValid(token, secret, clientAddress) {
+  /* siteverify documents form-urlencoded and JSON only, so don't hand it a
+   * multipart body from FormData. */
+  const form = new URLSearchParams();
+  form.set("secret", secret);
+  form.set("response", token);
+  if (clientAddress) form.set("remoteip", clientAddress);
+
+  let outcome;
+  try {
+    const response = await fetch(TURNSTILE_VERIFY_URL, {
+      method: "POST",
+      headers: { "content-type": "application/x-www-form-urlencoded" },
+      body: form,
+    });
+    if (!response.ok) {
+      console.error("Turnstile siteverify returned HTTP", response.status);
+      return false;
+    }
+    outcome = await response.json();
+  } catch (error) {
+    console.error("Turnstile siteverify could not be reached", error);
+    return false;
+  }
+
+  if (outcome.success !== true) {
+    console.warn("Turnstile rejected a submission", outcome["error-codes"]);
+    return false;
+  }
+  return true;
 }
 
 function requiredText(value, label, maximumLength) {
