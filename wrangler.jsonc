@@ -18,17 +18,17 @@
   },
   "compatibility_flags": [
     "nodejs_compat"
-  ]
+  ],
   // Storage for "Get started" applications. Create the database once with
   //   npx wrangler d1 create scheduler-applications
   // then paste the returned database_id here and apply db/migrations with
   //   npx wrangler d1 migrations apply scheduler-applications --remote
-  // ,"d1_databases": [
-  //   {
-  //     "binding": "SCHEDULER_APPLICATIONS_DB",
-  //     "database_name": "scheduler-applications",
-  //     "database_id": "<paste database_id here>",
-  //     "migrations_dir": "db/migrations"
-  //   }
-  // ]
+  "d1_databases": [
+    {
+      "binding": "SCHEDULER_APPLICATIONS_DB",
+      "database_name": "scheduler-applications",
+      "database_id": "69ac639b-08f0-4828-9ec4-7f1e55d0bd32",
+      "migrations_dir": "db/migrations"
+    }
+  ]
 }
