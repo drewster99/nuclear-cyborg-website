@@ -4,5 +4,11 @@
 # Turnstile test keys (https://developers.cloudflare.com/turnstile/troubleshooting/testing/):
 #   1x0000000000000000000000000000000AA  always passes
 #   2x0000000000000000000000000000000AA  always fails
-# Pair them with the matching test site key in apps/scheduler/index.html.
+# Pair them with the matching test site key in apps/scheduler/index.html:
+#   1x00000000000000000000AA  always passes
+#   2x00000000000000000000AB  always fails
+# The production site key only renders on nuclearcyborg.com — on 127.0.0.1 it
+# fails with Turnstile error 110200 ("domain not authorized"), which is the
+# widget working as configured, not a bug. Either swap both halves for the
+# test pair above, or add 127.0.0.1 under Hostname Management on the widget.
 TURNSTILE_SECRET="1x0000000000000000000000000000000AA"
