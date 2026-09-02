@@ -9,6 +9,8 @@
 #   2x00000000000000000000AB  always fails
 # The production site key only renders on nuclearcyborg.com — on 127.0.0.1 it
 # fails with Turnstile error 110200 ("domain not authorized"), which is the
-# widget working as configured, not a bug. Either swap both halves for the
-# test pair above, or add 127.0.0.1 under Hostname Management on the widget.
+# widget working as configured, not a bug. Swap both halves for the test pair
+# above to work locally. Do NOT add 127.0.0.1 to the production widget's
+# hostname list: the site key is public, so allowing loopback would let anyone
+# mint valid tokens for it from their own machine.
 TURNSTILE_SECRET="1x0000000000000000000000000000000AA"
