@@ -88,7 +88,8 @@ export async function handleSchedulerApplication(request, env) {
     return jsonResponse(500, { error: "We couldn't save your application. Please try again." });
   }
 
-  console.log("Stored scheduler application", id, "for", application.email);
+  /* The id is enough to find the row; the applicant's email stays out of the logs. */
+  console.log("Stored scheduler application", id);
   return jsonResponse(201, { id });
 }
 

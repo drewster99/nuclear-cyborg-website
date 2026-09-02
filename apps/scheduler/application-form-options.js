@@ -30,14 +30,21 @@ export const SMALL_AUDIENCE_RANGES = [
 /** Follower value meaning the applicant has no account on that platform. */
 export const NOT_ON_PLATFORM = "none";
 
-/** Platforms the form asks about, in the order they are shown. */
+/**
+ * Platforms the form asks about, in the order they are shown.
+ *
+ * `handlePrefix` is the fixed text shown immediately before the handle input,
+ * so the field reads the way the platform's own address does.
+ */
 export const PLATFORMS = [
-    { id: "tiktok", name: "TikTok", handlePlaceholder: "username", ranges: LARGE_AUDIENCE_RANGES },
-    { id: "instagram", name: "Instagram", handlePlaceholder: "username", ranges: LARGE_AUDIENCE_RANGES },
-    { id: "youtube", name: "YouTube", handlePlaceholder: "channel handle", ranges: LARGE_AUDIENCE_RANGES },
-    { id: "threads", name: "Threads", handlePlaceholder: "username", ranges: SMALL_AUDIENCE_RANGES },
-    { id: "x", name: "X", handlePlaceholder: "username", ranges: SMALL_AUDIENCE_RANGES },
-    { id: "bluesky", name: "Bluesky", handlePlaceholder: "handle.bsky.social", ranges: SMALL_AUDIENCE_RANGES },
+    { id: "tiktok", name: "TikTok", handlePrefix: "@", handlePlaceholder: "username", ranges: LARGE_AUDIENCE_RANGES },
+    { id: "instagram", name: "Instagram", handlePrefix: "@", handlePlaceholder: "username", ranges: LARGE_AUDIENCE_RANGES },
+    { id: "youtube", name: "YouTube", handlePrefix: "@", handlePlaceholder: "channel handle", ranges: LARGE_AUDIENCE_RANGES },
+    { id: "threads", name: "Threads", handlePrefix: "@", handlePlaceholder: "username", ranges: SMALL_AUDIENCE_RANGES },
+    { id: "x", name: "X", handlePrefix: "@", handlePlaceholder: "username", ranges: SMALL_AUDIENCE_RANGES },
+    { id: "bluesky", name: "Bluesky", handlePrefix: "@", handlePlaceholder: "handle.bsky.social", ranges: SMALL_AUDIENCE_RANGES },
+    { id: "linkedin", name: "LinkedIn", handlePrefix: "in/", handlePlaceholder: "your-profile", ranges: SMALL_AUDIENCE_RANGES },
+    { id: "mastodon", name: "Mastodon", handlePrefix: "@", handlePlaceholder: "you@instance.social", ranges: SMALL_AUDIENCE_RANGES },
 ];
 
 /** Maximum lengths accepted for free-text answers. */

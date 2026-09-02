@@ -1,10 +1,16 @@
 # Repo internals that must not be served as public files.
-.git
-.gitignore
-.assetsignore
-.wrangler
-.dev.vars*
-node_modules
-worker
-db
-wrangler.jsonc
+# Paths are anchored so a sibling like "workers/" can never slip through.
+/.git
+/.gitignore
+/.assetsignore
+/.wrangler
+/.dev.vars*
+/.env*
+/__PUBLIC_REPO
+/node_modules
+/package.json
+/package-lock.json
+/worker
+/workers
+/db
+/wrangler.jsonc

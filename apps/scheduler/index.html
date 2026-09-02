@@ -519,6 +519,8 @@
 
         .apply-handle .at {
             display: flex;
+            flex: 0 0 auto;
+            white-space: nowrap;
             align-items: center;
             padding: 0 0.9rem;
             border: 1px solid rgba(255, 255, 255, 0.12);
@@ -531,6 +533,7 @@
 
         .apply-handle .apply-input {
             border-radius: 0 10px 10px 0;
+            min-width: 0;
         }
 
         .apply-platform {
@@ -1038,17 +1041,17 @@
                     <div class="apply-field is-visible">
                         <label for="apply-first-name">Name</label>
                         <div class="apply-row">
-                            <input class="apply-input" id="apply-first-name" name="firstName" autocomplete="given-name" placeholder="First" required maxlength="100">
-                            <input class="apply-input" id="apply-last-name" name="lastName" autocomplete="family-name" placeholder="Last" required maxlength="100" aria-label="Last name">
+                            <input class="apply-input" id="apply-first-name" name="firstName" autocomplete="given-name" placeholder="First" required data-limit="name">
+                            <input class="apply-input" id="apply-last-name" name="lastName" autocomplete="family-name" placeholder="Last" required data-limit="name" aria-label="Last name">
                         </div>
                     </div>
                     <div class="apply-field" data-complete="optional">
                         <label for="apply-company">Company <span class="optional">(optional)</span></label>
-                        <input class="apply-input" id="apply-company" name="company" autocomplete="organization" placeholder="Studio, brand, or just you" maxlength="200">
+                        <input class="apply-input" id="apply-company" name="company" autocomplete="organization" placeholder="Studio, brand, or just you" data-limit="company">
                     </div>
                     <div class="apply-field" data-complete="email">
                         <label for="apply-email">Email address</label>
-                        <input class="apply-input" id="apply-email" name="email" type="email" autocomplete="email" placeholder="you@example.com" required maxlength="254">
+                        <input class="apply-input" id="apply-email" name="email" type="email" autocomplete="email" placeholder="you@example.com" required data-limit="email">
                     </div>
                     <div class="apply-field apply-actions">
                         <span class="apply-hint">Next: your audience</span>
@@ -1073,7 +1076,7 @@
 
                     <div class="apply-field is-visible" data-complete="phone">
                         <label for="apply-phone">Phone number</label>
-                        <input class="apply-input" id="apply-phone" name="phone" type="tel" autocomplete="tel" placeholder="+1 555 123 4567" required maxlength="30">
+                        <input class="apply-input" id="apply-phone" name="phone" type="tel" autocomplete="tel" placeholder="+1 555 123 4567" required data-limit="phone">
                     </div>
                     <div class="apply-field">
                         <label for="apply-country">Country</label>
@@ -1083,7 +1086,7 @@
                     </div>
                     <div class="apply-field" data-complete="optional">
                         <label for="apply-comments">Anything else? <span class="optional">(optional)</span></label>
-                        <textarea class="apply-input" id="apply-comments" name="comments" placeholder="Questions, what you're publishing, how you'd use it…" maxlength="2000"></textarea>
+                        <textarea class="apply-input" id="apply-comments" name="comments" placeholder="Questions, what you're publishing, how you'd use it…" data-limit="comments"></textarea>
                     </div>
                     <div class="apply-field apply-actions">
                         <span class="apply-hint">That's everything.</span>
@@ -1134,7 +1137,7 @@
     </dialog>
 
     <script type="module">
-        import { COUNTRIES, NOT_ON_PLATFORM, PLATFORMS, isPlausibleEmailAddress, isPlausiblePhoneNumber } from "./application-form-options.js";
+        import { COUNTRIES, NOT_ON_PLATFORM, PLATFORMS, TEXT_LIMITS, isPlausibleEmailAddress, isPlausiblePhoneNumber } from "./application-form-options.js";
 
         const APPLY_ENDPOINT = "/apps/scheduler/apply";
         const dialog = document.getElementById("get-started-dialog");
@@ -1148,6 +1151,7 @@
 
         buildPlatformFields();
         buildCountryOptions();
+        applyTextLimits();
 
         document.querySelectorAll("[data-dialog-open]").forEach((trigger) => {
             trigger.addEventListener("click", (event) => {
@@ -1371,11 +1375,21 @@
                         ${rangePills}
                     </div>
                     <div class="apply-handle">
-                        <span class="at" aria-hidden="true">@</span>
-                        <input class="apply-input" name="handle-${platform.id}" placeholder="${platform.handlePlaceholder} (optional)" aria-label="${platform.name} handle" autocomplete="off" autocapitalize="off" spellcheck="false" maxlength="100">
+                        <span class="at" aria-hidden="true">${platform.handlePrefix}</span>
+                        <input class="apply-input" name="handle-${platform.id}" placeholder="${platform.handlePlaceholder} (optional)" aria-label="${platform.name} handle" autocomplete="off" autocapitalize="off" spellcheck="false" data-limit="handle">
                     </div>`;
                 actionsRow.before(field);
             });
+        }
+
+        /* Length caps live in application-form-options.js so the form and the
+         * Worker enforce the same numbers; the markup names a limit, never a value. */
+        function applyTextLimits() {
+            for (const control of form.querySelectorAll("[data-limit]")) {
+                const limit = TEXT_LIMITS[control.dataset.limit];
+                if (limit === undefined) throw new Error(`Unknown text limit "${control.dataset.limit}"`);
+                control.maxLength = limit;
+            }
         }
 
         function pillMarkup(name, value, label, extraClass) {

@@ -1,0 +1,15 @@
+{
+  "name": "nuclear-cyborg-website",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Static site and Worker for nuclearcyborg.com. Wrangler is pinned so a deploy always runs the toolchain it was tested with.",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "migrate": "wrangler d1 migrations apply scheduler-applications --remote",
+    "applications": "db/list-applications.sh"
+  },
+  "devDependencies": {
+    "wrangler": "4.128.0"
+  }
+}
