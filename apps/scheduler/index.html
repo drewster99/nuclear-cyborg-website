@@ -287,6 +287,23 @@
         }
 
 
+        .product-final-cta .meta-help-link {
+            background: none;
+            border: 0;
+            padding: 0;
+            font: inherit;
+            color: var(--color-primary);
+            text-decoration: underline;
+            text-underline-offset: 0.2em;
+            cursor: pointer;
+        }
+
+        .product-final-cta .meta-help-link:hover,
+        .product-final-cta .meta-help-link:focus-visible {
+            outline: none;
+            text-decoration-thickness: 2px;
+        }
+
         /* Get started application dialog */
         button.cta-button {
             border: 0;
@@ -667,6 +684,72 @@
             display: block;
         }
 
+        .help-dialog {
+            width: min(540px, calc(100vw - 2rem));
+        }
+
+        .help-dialog .apply-actions {
+            display: flex;
+        }
+
+        .help-steps {
+            list-style: none;
+            counter-reset: help-step;
+            padding: 0;
+            margin: 0 0 var(--space-md);
+        }
+
+        .help-steps li {
+            counter-increment: help-step;
+            display: grid;
+            grid-template-columns: 2rem 1fr;
+            gap: var(--space-xs);
+            align-items: start;
+            padding: var(--space-xs) 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+            color: var(--color-text-secondary);
+            line-height: 1.55;
+        }
+
+        .help-steps li:last-child {
+            border-bottom: 0;
+        }
+
+        .help-steps li::before {
+            content: counter(help-step);
+            font-family: 'JetBrains Mono', ui-monospace, monospace;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--color-primary);
+            border: 1px solid rgba(0, 255, 157, 0.4);
+            border-radius: 50%;
+            width: 1.6rem;
+            height: 1.6rem;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 0.1rem;
+        }
+
+        .help-steps strong {
+            color: var(--color-text);
+            font-weight: 600;
+        }
+
+        .help-steps a,
+        .help-note a {
+            color: var(--color-primary);
+            text-decoration: underline;
+            text-underline-offset: 0.2em;
+        }
+
+        .help-note {
+            font-size: 0.85rem;
+            color: var(--color-text-secondary);
+            line-height: 1.55;
+            margin: 0;
+        }
+
         .apply-success {
             text-align: center;
             padding: var(--space-sm) 0;
@@ -761,7 +844,7 @@
                     <h1>Drew's Video + Socials Scheduler</h1>
                     <p class="product-tagline">A local-first publishing workstation for YouTube™ creators. AI-generated descriptions, multi-platform social scheduling, and comment moderation — all running on your Mac, with your credentials stored in the system Keychain.</p>
                     <div class="product-cta-row">
-                        <button type="button" class="cta-button primary" data-apply-open>Get started</button>
+                        <button type="button" class="cta-button primary" data-dialog-open="get-started-dialog">Get started</button>
                         <a href="#features" class="cta-button secondary">See features</a>
                     </div>
                 </div>
@@ -905,8 +988,8 @@
             <div class="container product-final-cta">
                 <h2>Ship faster, with less ceremony</h2>
                 <p>Runs entirely on your own hardware.</p>
-                <p><button type="button" class="cta-button primary" data-apply-open>Get started</button></p>
-                <p class="meta">Requires macOS 14+ and an Anthropic API key.</p>
+                <p><button type="button" class="cta-button primary" data-dialog-open="get-started-dialog">Get started</button></p>
+                <p class="meta">Requires macOS 14+ and an Anthropic API key. <button type="button" class="meta-help-link" data-dialog-open="api-key-help-dialog">How do I get one?</button></p>
             </div>
         </section>
     </main>
@@ -937,7 +1020,7 @@
     </aside>
     <dialog id="get-started-dialog" class="apply-dialog" aria-labelledby="apply-title">
         <div class="apply-card">
-            <button type="button" class="apply-close" data-apply-close aria-label="Close">&times;</button>
+            <button type="button" class="apply-close" data-dialog-close aria-label="Close">&times;</button>
             <form id="apply-form" novalidate>
                 <div class="apply-progress" aria-hidden="true"><span></span><span></span><span></span></div>
 
@@ -1018,9 +1101,29 @@
                     </svg>
                     <h2>Application received</h2>
                     <p>Your application will be reviewed within 7 days.</p>
-                    <button type="button" class="apply-button" data-apply-close>Done</button>
+                    <button type="button" class="apply-button" data-dialog-close>Done</button>
                 </section>
             </form>
+        </div>
+    </dialog>
+
+    <dialog id="api-key-help-dialog" class="apply-dialog help-dialog" aria-labelledby="api-key-help-title">
+        <div class="apply-card">
+            <button type="button" class="apply-close" data-dialog-close aria-label="Close">&times;</button>
+            <p class="apply-step-label">Help</p>
+            <h2 id="api-key-help-title">Getting an Anthropic API key</h2>
+            <p class="apply-intro">The Scheduler talks to Claude directly with your own key. Usage is billed to you by Anthropic at their published rates, and nothing passes through us.</p>
+            <ol class="help-steps">
+                <li><span><strong>Create a Claude Console account</strong> at <a href="https://platform.claude.com" target="_blank" rel="noopener">platform.claude.com</a>. Sign in if you already have one.</span></li>
+                <li><span><strong>Add a payment method</strong> under <a href="https://platform.claude.com/settings/billing" target="_blank" rel="noopener">Billing</a>. The API is pay as you go, so a key without billing won't work.</span></li>
+                <li><span><strong>Create a key</strong> on the <a href="https://platform.claude.com/settings/keys" target="_blank" rel="noopener">API keys</a> page. Copy it right away; the full key is shown only once.</span></li>
+                <li><span><strong>Paste it into the Scheduler's settings.</strong> It's stored in your macOS Keychain, never in a file.</span></li>
+            </ol>
+            <p class="help-note">More detail in Anthropic's <a href="https://platform.claude.com/docs/en/get-started" target="_blank" rel="noopener">getting started guide</a>.</p>
+            <div class="apply-actions">
+                <span></span>
+                <button type="button" class="apply-button" data-dialog-close>Got it</button>
+            </div>
         </div>
     </dialog>
 
@@ -1040,20 +1143,22 @@
         buildPlatformFields();
         buildCountryOptions();
 
-        document.querySelectorAll("[data-apply-open]").forEach((trigger) => {
+        document.querySelectorAll("[data-dialog-open]").forEach((trigger) => {
             trigger.addEventListener("click", (event) => {
                 event.preventDefault();
-                dialog.showModal();
-                focusFirstInput(activeStep());
+                const target = document.getElementById(trigger.dataset.dialogOpen);
+                target.showModal();
+                if (target === dialog) focusFirstInput(activeStep());
             });
         });
 
-        dialog.querySelectorAll("[data-apply-close]").forEach((closer) => {
-            closer.addEventListener("click", () => dialog.close());
-        });
-
-        dialog.addEventListener("click", (event) => {
-            if (event.target === dialog) dialog.close();
+        document.querySelectorAll("dialog.apply-dialog").forEach((anyDialog) => {
+            anyDialog.querySelectorAll("[data-dialog-close]").forEach((closer) => {
+                closer.addEventListener("click", () => anyDialog.close());
+            });
+            anyDialog.addEventListener("click", (event) => {
+                if (event.target === anyDialog) anyDialog.close();
+            });
         });
 
         dialog.addEventListener("close", () => {
