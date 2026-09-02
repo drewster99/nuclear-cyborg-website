@@ -702,6 +702,17 @@
             display: block;
         }
 
+        .apply-consent {
+            margin: var(--space-sm) 0 0;
+            font-size: 0.8rem;
+            line-height: 1.5;
+            color: var(--color-text-secondary);
+        }
+
+        .apply-consent a {
+            color: var(--color-primary);
+        }
+
         .help-dialog {
             width: min(540px, calc(100vw - 2rem));
         }
@@ -885,13 +896,13 @@
                 <div class="feature-tile">
                     <span class="icon">📡</span>
                     <h3>Multi-platform social posts</h3>
-                    <p>Generate per-platform copy from a single template, edit each card individually, then post now or schedule. Built-in OAuth for every supported network.</p>
+                    <p>Generate per-platform copy from a single template, then edit and approve each card individually before it goes anywhere. Post now or schedule for later.</p>
                 </div>
 
                 <div class="feature-tile">
                     <span class="icon">⏰</span>
                     <h3>Scheduled publishing</h3>
-                    <p>Set a publish time on the video, and every approved social post fires at that exact moment. Reschedule freely — concurrent edits are locked safely.</p>
+                    <p>Set a publish time on the video, and the posts you've approved go out at that moment. Reschedule freely — concurrent edits are locked safely.</p>
                 </div>
 
                 <div class="feature-tile">
@@ -935,7 +946,7 @@
         <section class="platforms-section">
             <div class="container">
                 <h2>Connect every channel</h2>
-                <p class="section-lead">One-click OAuth for every supported network. No copy-paste tokens, no expiring app passwords, no third-party brokers in the middle.</p>
+                <p class="section-lead">One-click sign-in for every supported network. No copy-paste tokens and no expiring app passwords.</p>
                 <div class="platform-grid">
                     <div class="platform-pill">
                         <span class="platform-name">YouTube™ video platform</span>
@@ -967,7 +978,7 @@
 
         <section class="workflow-section container">
             <h2>From upload to live in five steps</h2>
-            <p class="section-lead">Each step is automatable; flip the auto-action toggles and the next stage starts on its own when the previous one finishes.</p>
+            <p class="section-lead">Optional auto-actions take care of the busywork between stages. Nothing is published until you've reviewed it and approved it yourself.</p>
             <div class="workflow-steps">
                 <div class="workflow-step">
                     <span class="step-num">01</span>
@@ -992,13 +1003,13 @@
                 <div class="workflow-step">
                     <span class="step-num">05</span>
                     <h3>Publish</h3>
-                    <p>The scheduler flips the video public and fires every approved post in the same moment.</p>
+                    <p>At the time you chose, the video goes public and the posts you approved go out alongside it.</p>
                 </div>
             </div>
 
             <div class="privacy-callout">
                 <h3>Local-first. Always.</h3>
-                <p>Your videos, transcripts, drafts, and OAuth tokens never leave your machine. Credentials live in the macOS Keychain. The only network calls go to the platforms you've explicitly connected and to Claude for the AI generation steps you trigger.</p>
+                <p>Your data stays on your Mac. Videos, transcripts, and drafts are stored locally, and account credentials live in the macOS Keychain. The app talks to the accounts you've connected and to Claude for the generation steps you trigger — it sends nothing to analytics or advertising services.</p>
             </div>
         </section>
 
@@ -1081,7 +1092,7 @@
                 <section class="apply-step" data-step="contact">
                     <p class="apply-step-label">Step 3 of 3</p>
                     <h2>How can we reach you?</h2>
-                    <p class="apply-intro">We'll only use this to follow up on your application.</p>
+                    <p class="apply-intro">We use these details only to review your application and follow up about the Scheduler. We don't sell them and we don't use them for advertising. See our <a href="https://nuclearcyborg.com/privacy" target="_blank" rel="noopener">Privacy Policy</a>.</p>
 
                     <div class="apply-field is-visible" data-complete="phone">
                         <label for="apply-phone">Phone number</label>
@@ -1103,6 +1114,7 @@
                         <button type="submit" class="apply-button" data-apply-finish>Finish</button>
                     </div>
                     <p class="apply-error" role="alert" data-apply-error></p>
+                    <p class="apply-consent">By submitting, you agree to our <a href="https://nuclearcyborg.com/terms" target="_blank" rel="noopener">Terms of Use</a> and <a href="https://nuclearcyborg.com/privacy" target="_blank" rel="noopener">Privacy Policy</a>.</p>
                 </section>
 
                 <section class="apply-step apply-success" data-step="done">
