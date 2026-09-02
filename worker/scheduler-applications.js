@@ -54,6 +54,10 @@ export async function handleSchedulerApplication(request, env) {
     console.error("TURNSTILE_SECRET is not configured; refusing to accept applications unverified");
     return jsonResponse(500, { error: "Applications are temporarily unavailable. Please email support@nuclearcyborg.com." });
   }
+  if (!env.TURNSTILE_HOSTNAME) {
+    console.error("TURNSTILE_HOSTNAME is not configured; refusing to accept applications unverified");
+    return jsonResponse(500, { error: "Applications are temporarily unavailable. Please email support@nuclearcyborg.com." });
+  }
 
   const clientAddress = request.headers.get("cf-connecting-ip");
   const { success: withinRateLimit } = await rateLimiter.limit({ key: clientAddress || UNATTRIBUTED_CLIENT_KEY });
@@ -76,7 +80,7 @@ export async function handleSchedulerApplication(request, env) {
 
   /* Last gate before the write: the token is single-use and short-lived, so it
    * is spent only once the answers themselves are known to be good. */
-  const challengePassed = await turnstileTokenIsValid(application.turnstileToken, env.TURNSTILE_SECRET, clientAddress);
+  const challengePassed = await turnstileTokenIsValid(application.turnstileToken, env, clientAddress);
   if (!challengePassed) {
     return jsonResponse(403, { error: "We couldn't verify that you're human. Please try the challenge again." });
   }
@@ -211,11 +215,13 @@ function validateApplication(body) {
 }
 
 /**
- * Asks Cloudflare whether a Turnstile token is genuine, unexpired and unspent.
- * Anything other than an explicit success — including a siteverify outage —
- * fails the submission; this is the gate, so it does not fall open.
+ * Asks Cloudflare whether a Turnstile token is genuine, unexpired, unspent, and
+ * minted on our own hostname. Anything other than an explicit success —
+ * including a siteverify outage — fails the submission; this is the gate, so it
+ * does not fall open.
  */
-async function turnstileTokenIsValid(token, secret, clientAddress) {
+async function turnstileTokenIsValid(token, env, clientAddress) {
+  const secret = env.TURNSTILE_SECRET;
   /* siteverify documents form-urlencoded and JSON only, so don't hand it a
    * multipart body from FormData. */
   const form = new URLSearchParams();
@@ -242,6 +248,12 @@ async function turnstileTokenIsValid(token, secret, clientAddress) {
 
   if (outcome.success !== true) {
     console.warn("Turnstile rejected a submission", outcome["error-codes"]);
+    return false;
+  }
+  /* A token is only good for the page it was solved on. Without this, adding a
+   * second hostname to the widget would silently let tokens from there through. */
+  if (outcome.hostname !== env.TURNSTILE_HOSTNAME) {
+    console.warn("Turnstile token was minted on an unexpected hostname", outcome.hostname);
     return false;
   }
   return true;

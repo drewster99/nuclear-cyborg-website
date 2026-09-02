@@ -19,6 +19,12 @@
   "compatibility_flags": [
     "nodejs_compat"
   ],
+  // Hostname a Turnstile token must have been minted on. Checked against the
+  // `hostname` siteverify reports, so a token issued for some other host on the
+  // widget can't be replayed here. Not a secret; .dev.vars overrides it locally.
+  "vars": {
+    "TURNSTILE_HOSTNAME": "nuclearcyborg.com"
+  },
   // Per-IP throttle in front of the public application endpoint. `period` may
   // only be 10 or 60; counters are per Cloudflare location, so the effective
   // global rate is higher than `limit` and this is a flood brake, not a quota.

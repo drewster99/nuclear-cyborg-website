@@ -14,3 +14,7 @@
 # hostname list: the site key is public, so allowing loopback would let anyone
 # mint valid tokens for it from their own machine.
 TURNSTILE_SECRET="1x0000000000000000000000000000000AA"
+
+# Tokens from the test keys report hostname "example.com"; production expects
+# nuclearcyborg.com (set in wrangler.jsonc). Override it here for local runs.
+TURNSTILE_HOSTNAME="example.com"
