@@ -9,6 +9,11 @@
   // traces especially, which the dashboard turns on and this file did not have.
   "observability": {
     "enabled": true,
+    // The Threads data-deletion callback hands Meta a status URL carrying a
+    // Meta-scoped user id in the query string. Logs and traces both persist at
+    // full sampling, so keep query strings out of them; the callback already
+    // logs the id and confirmation code deliberately where we want them.
+    "redact_query_string": true,
     "logs": {
       "enabled": true,
       "head_sampling_rate": 1,

@@ -7,3 +7,6 @@
 
 # npm — wrangler is pinned in package.json; the lockfile IS committed
 node_modules
+
+# editor scratch
+.*.swp
