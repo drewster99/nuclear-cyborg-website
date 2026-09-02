@@ -1146,6 +1146,11 @@
         </div>
     </dialog>
 
+    <!-- Classic script: runs at parse time, so the callback is in place before
+         api.js can fire it. A deferred module would lose that race. -->
+    <script>
+        window.turnstileLoaded = new Promise((resolve) => { window.onTurnstileReady = resolve; });
+    </script>
     <script src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit&onload=onTurnstileReady" async defer></script>
     <script type="module">
         import { COUNTRIES, NOT_ON_PLATFORM, PLATFORMS, TEXT_LIMITS, isPlausibleEmailAddress, isPlausiblePhoneNumber } from "./application-form-options.js";
@@ -1165,12 +1170,11 @@
         const emailInput = document.getElementById("apply-email");
 
         let turnstileWidget = null;
+        let turnstileRequested = false;
 
         buildPlatformFields();
         buildCountryOptions();
         applyTextLimits();
-        /* api.js is async, so it may call back before or after this module runs. */
-        window.onTurnstileReady = () => renderTurnstileIfPresent(activeStep());
         renderTurnstileIfPresent(activeStep());
 
         document.querySelectorAll("[data-dialog-open]").forEach((trigger) => {
@@ -1289,8 +1293,10 @@
             if (step.querySelector("[data-turnstile]")) renderTurnstile();
         }
 
-        function renderTurnstile() {
-            if (turnstileWidget !== null || !window.turnstile) return;
+        async function renderTurnstile() {
+            if (turnstileRequested) return;
+            turnstileRequested = true;
+            await window.turnstileLoaded;
             turnstileWidget = window.turnstile.render("[data-turnstile]", {
                 sitekey: TURNSTILE_SITE_KEY,
                 action: "scheduler-application",
@@ -1301,6 +1307,7 @@
                     refreshActionButton(activeStep());
                 },
             });
+            refreshActionButton(activeStep());
         }
 
         function turnstileToken() {
