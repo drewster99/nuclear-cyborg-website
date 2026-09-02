@@ -1,0 +1,10 @@
+# Repo internals that must not be served as public files.
+.git
+.gitignore
+.assetsignore
+.wrangler
+.dev.vars*
+node_modules
+worker
+db
+wrangler.jsonc

@@ -1,14 +1,34 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "nuclear-cyborg-website",
+  "main": "worker/index.js",
   "compatibility_date": "2026-05-11",
   "observability": {
     "enabled": true
   },
   "assets": {
-    "directory": "."
+    "directory": ".",
+    "binding": "ASSETS",
+    // Only these paths reach worker/index.js; everything else is served straight from the asset bundle.
+    "run_worker_first": [
+      "/apps/scheduler/callback-threads-uninstall",
+      "/apps/scheduler/callback-threads-delete",
+      "/apps/scheduler/apply"
+    ]
   },
   "compatibility_flags": [
     "nodejs_compat"
   ]
+  // Storage for "Get started" applications. Create the database once with
+  //   npx wrangler d1 create scheduler-applications
+  // then paste the returned database_id here and apply db/migrations with
+  //   npx wrangler d1 migrations apply scheduler-applications --remote
+  // ,"d1_databases": [
+  //   {
+  //     "binding": "SCHEDULER_APPLICATIONS_DB",
+  //     "database_name": "scheduler-applications",
+  //     "database_id": "<paste database_id here>",
+  //     "migrations_dir": "db/migrations"
+  //   }
+  // ]
 }
