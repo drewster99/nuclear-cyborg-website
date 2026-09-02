@@ -3,8 +3,23 @@
   "name": "nuclear-cyborg-website",
   "main": "worker/index.js",
   "compatibility_date": "2026-05-11",
+  // Mirrors what the Cloudflare dashboard shows for this Worker. A deploy sends
+  // this block as part of the script metadata, so anything toggled in the
+  // dashboard but missing here is liable to be reset on the next deploy —
+  // traces especially, which the dashboard turns on and this file did not have.
   "observability": {
-    "enabled": true
+    "enabled": true,
+    "logs": {
+      "enabled": true,
+      "head_sampling_rate": 1,
+      "invocation_logs": true,
+      "persist": true
+    },
+    "traces": {
+      "enabled": true,
+      "head_sampling_rate": 1,
+      "persist": true
+    }
   },
   "assets": {
     "directory": ".",
