@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Drew's Video + Socials Scheduler | Nuclear Cyborg Corp</title>
-    <meta name="description" content="Drew's Video + Socials Scheduler — a local-first publishing workstation for YouTube™ video platform creators, AI-generated descriptions, multi-platform social scheduling, comment moderation, and a native macOS menu-bar app — your data stays on your Mac.">
-    <meta name="keywords" content="YouTube™ video platform scheduler, social media scheduler, YouTube™ video platform uploader, claude ai, local-first, mac menu bar app, bluesky, mastodon, threads, twitter, linkedin">
+    <meta name="description" content="Drew's Video + Socials Scheduler — a local-first publishing workstation for YouTube™ video platform creators, AI-generated descriptions, multi-platform social scheduling, comment moderation, and a native macOS app — your data stays on your Mac.">
+    <meta name="keywords" content="YouTube™ video platform scheduler, social media scheduler, YouTube™ video platform uploader, claude ai, local-first, mac app, bluesky, mastodon, threads, twitter, linkedin">
     <meta name="author" content="Nuclear Cyborg Corp">
     <meta property="og:title" content="Drew's Video + Socials Scheduler | Nuclear Cyborg Corp">
     <meta property="og:description" content="Drew's Video + Socials Scheduler — a local-first publishing workstation for YouTube™ video platform creators. AI descriptions, multi-platform social scheduling, comment moderation — runs on your Mac.">
@@ -286,6 +286,443 @@
             margin: 0;
         }
 
+
+        /* Get started application dialog */
+        button.cta-button {
+            border: 0;
+            font-family: inherit;
+            cursor: pointer;
+        }
+
+        .cta-button.primary {
+            background: var(--gradient-cta);
+            color: #0a0a0a;
+        }
+
+        .apply-dialog {
+            border: 0;
+            padding: 0;
+            margin: auto;
+            background: transparent;
+            width: min(620px, calc(100vw - 2rem));
+            max-height: calc(100vh - 2rem);
+            overflow: visible;
+            color: var(--color-text);
+            font-family: var(--font-body);
+        }
+
+        .apply-dialog::backdrop {
+            background: rgba(4, 4, 4, 0.72);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+
+        .apply-dialog[open] {
+            animation: apply-dialog-in 0.35s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+        }
+
+        @keyframes apply-dialog-in {
+            from { opacity: 0; transform: translateY(16px) scale(0.98); }
+            to { opacity: 1; transform: none; }
+        }
+
+        .apply-card {
+            position: relative;
+            background: linear-gradient(160deg, #161616 0%, #101010 100%);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: var(--space-md);
+            max-height: calc(100vh - 2rem);
+            overflow-y: auto;
+            box-shadow:
+                0 30px 80px rgba(0, 0, 0, 0.65),
+                0 0 80px rgba(0, 255, 157, 0.08),
+                inset 0 1px 0 rgba(255, 255, 255, 0.05);
+        }
+
+        .apply-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            background: rgba(255, 255, 255, 0.04);
+            color: var(--color-text-secondary);
+            font-size: 1.25rem;
+            line-height: 1;
+            cursor: pointer;
+            transition: border-color 0.2s ease, color 0.2s ease;
+        }
+
+        .apply-close:hover,
+        .apply-close:focus-visible {
+            border-color: var(--color-primary);
+            color: var(--color-primary);
+            outline: none;
+        }
+
+        .apply-progress {
+            display: flex;
+            gap: 6px;
+            margin-bottom: var(--space-sm);
+            padding-right: 3rem;
+        }
+
+        .apply-progress span {
+            flex: 1;
+            height: 4px;
+            border-radius: 2px;
+            background: rgba(255, 255, 255, 0.1);
+            transition: background 0.3s ease;
+        }
+
+        .apply-progress span.is-done {
+            background: var(--gradient-cta);
+        }
+
+        .apply-step-label {
+            font-family: 'JetBrains Mono', ui-monospace, monospace;
+            font-size: 0.75rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--color-primary);
+            margin-bottom: var(--space-xs);
+        }
+
+        .apply-card h2 {
+            font-family: var(--font-heading);
+            font-size: 1.75rem;
+            margin: 0 0 0.25rem;
+            color: var(--color-text);
+        }
+
+        .apply-card .apply-intro {
+            color: var(--color-text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.5;
+            margin: 0 0 var(--space-md);
+        }
+
+        .apply-step {
+            display: none;
+        }
+
+        .apply-step.is-active {
+            display: block;
+        }
+
+        .apply-field {
+            display: none;
+            margin-bottom: var(--space-sm);
+        }
+
+        .apply-field.is-visible {
+            display: block;
+            animation: apply-reveal 0.4s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+        }
+
+        @keyframes apply-reveal {
+            from { opacity: 0; transform: translateY(12px); }
+            to { opacity: 1; transform: none; }
+        }
+
+        .apply-field > label,
+        .apply-field > legend {
+            display: block;
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            color: var(--color-text-secondary);
+            margin-bottom: 0.45rem;
+        }
+
+        .apply-field .optional {
+            font-weight: 400;
+            text-transform: none;
+            letter-spacing: 0;
+            opacity: 0.7;
+        }
+
+        .apply-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--space-xs);
+        }
+
+        .apply-input {
+            width: 100%;
+            box-sizing: border-box;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 10px;
+            padding: 0.8rem 1rem;
+            color: var(--color-text);
+            font: inherit;
+            font-size: 1rem;
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .apply-input::placeholder {
+            color: rgba(255, 255, 255, 0.3);
+        }
+
+        .apply-input:focus {
+            outline: none;
+            border-color: var(--color-primary);
+            box-shadow: 0 0 0 3px rgba(0, 255, 157, 0.15);
+        }
+
+        select.apply-input {
+            appearance: none;
+            -webkit-appearance: none;
+            background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'><path d='M1 1l5 5 5-5' fill='none' stroke='%2300ff9d' stroke-width='1.6'/></svg>");
+            background-repeat: no-repeat;
+            background-position: right 1rem center;
+            padding-right: 2.5rem;
+            cursor: pointer;
+        }
+
+        select.apply-input option {
+            background: #141414;
+            color: var(--color-text);
+        }
+
+        textarea.apply-input {
+            min-height: 110px;
+            resize: vertical;
+        }
+
+        .apply-handle {
+            display: flex;
+            align-items: stretch;
+        }
+
+        .apply-handle .at {
+            display: flex;
+            align-items: center;
+            padding: 0 0.9rem;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-right: 0;
+            border-radius: 10px 0 0 10px;
+            background: rgba(255, 255, 255, 0.06);
+            color: var(--color-text-secondary);
+            font-family: 'JetBrains Mono', ui-monospace, monospace;
+        }
+
+        .apply-handle .apply-input {
+            border-radius: 0 10px 10px 0;
+        }
+
+        .apply-platform {
+            margin: 0 0 var(--space-sm);
+            min-width: 0;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 14px;
+            padding: var(--space-sm);
+            background: var(--gradient-card);
+        }
+
+        .apply-platform legend {
+            padding: 0 0.4rem;
+            margin-left: -0.4rem;
+            font-family: var(--font-heading);
+            font-size: 1.05rem;
+            font-weight: 700;
+            text-transform: none;
+            letter-spacing: 0;
+            color: var(--color-text);
+        }
+
+        .apply-platform .apply-sublabel {
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            color: var(--color-text-secondary);
+            margin: 0 0 0.45rem;
+        }
+
+        .apply-platform .apply-handle {
+            margin-top: var(--space-xs);
+        }
+
+        .apply-pills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .apply-pill {
+            position: relative;
+            display: inline-block;
+        }
+
+        .apply-pill input {
+            position: absolute;
+            inset: 0;
+            opacity: 0;
+            margin: 0;
+            cursor: pointer;
+        }
+
+        .apply-pill span {
+            display: inline-block;
+            padding: 0.45rem 0.9rem;
+            border-radius: 999px;
+            border: 1px solid rgba(255, 255, 255, 0.14);
+            background: rgba(255, 255, 255, 0.03);
+            font-size: 0.875rem;
+            color: var(--color-text);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            white-space: nowrap;
+        }
+
+        .apply-pill:hover span {
+            border-color: rgba(0, 255, 157, 0.5);
+        }
+
+        .apply-pill input:checked + span {
+            background: rgba(0, 255, 157, 0.12);
+            border-color: var(--color-primary);
+            color: var(--color-primary);
+            font-weight: 600;
+        }
+
+        .apply-pill input:focus-visible + span {
+            box-shadow: 0 0 0 2px var(--color-primary);
+        }
+
+        .apply-pill.is-muted span {
+            color: var(--color-text-secondary);
+            border-style: dashed;
+        }
+
+        .apply-field.is-visible.apply-actions {
+            display: flex;
+        }
+
+        .apply-actions {
+            align-items: center;
+            justify-content: space-between;
+            gap: var(--space-sm);
+            margin-top: var(--space-md);
+        }
+
+        .apply-actions .apply-hint {
+            font-size: 0.85rem;
+            color: var(--color-text-secondary);
+        }
+
+        .apply-button {
+            display: inline-block;
+            border: 0;
+            border-radius: 8px;
+            padding: 0.85em 1.75em;
+            font: inherit;
+            font-weight: 600;
+            font-size: 1rem;
+            color: #0a0a0a;
+            background: var(--gradient-cta);
+            cursor: pointer;
+            transition: transform 0.2s ease, opacity 0.2s ease;
+        }
+
+        .apply-button:hover:not(:disabled) {
+            transform: translateY(-2px);
+        }
+
+        .apply-button:focus-visible {
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(0, 255, 157, 0.35);
+        }
+
+        .apply-button:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+
+        .apply-button.secondary {
+            background: transparent;
+            color: var(--color-text);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .apply-error {
+            display: none;
+            margin-top: var(--space-sm);
+            padding: 0.75rem 1rem;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 45, 85, 0.5);
+            background: rgba(255, 45, 85, 0.08);
+            color: #ff8fa3;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        .apply-error.is-visible {
+            display: block;
+        }
+
+        .apply-success {
+            text-align: center;
+            padding: var(--space-sm) 0;
+        }
+
+        .apply-success .clock {
+            width: 96px;
+            height: 96px;
+            margin: 0 auto var(--space-sm);
+            display: block;
+            filter: drop-shadow(0 0 24px rgba(0, 255, 157, 0.35));
+        }
+
+        .apply-success .clock .hand {
+            transform-origin: 48px 48px;
+            animation: apply-clock-hand 6s linear infinite;
+        }
+
+        .apply-success .clock .hand.hour {
+            animation-duration: 72s;
+        }
+
+        @keyframes apply-clock-hand {
+            to { transform: rotate(360deg); }
+        }
+
+        .apply-success h2 {
+            font-size: 1.6rem;
+            margin-bottom: var(--space-xs);
+        }
+
+        .apply-success p {
+            color: var(--color-text-secondary);
+            font-size: 1.05rem;
+            line-height: 1.6;
+            max-width: 380px;
+            margin: 0 auto var(--space-md);
+        }
+
+        @media (max-width: 520px) {
+            .apply-card {
+                padding: var(--space-sm);
+                border-radius: 16px;
+            }
+
+            .apply-row {
+                grid-template-columns: 1fr;
+            }
+
+            .apply-actions {
+                flex-direction: column-reverse;
+                align-items: stretch;
+                text-align: center;
+            }
+        }
+
         @media (max-width: 720px) {
             .product-hero-content {
                 grid-template-columns: 1fr;
@@ -324,7 +761,8 @@
                     <h1>Drew's Video + Socials Scheduler</h1>
                     <p class="product-tagline">A local-first publishing workstation for YouTube™ creators. AI-generated descriptions, multi-platform social scheduling, and comment moderation — all running on your Mac, with your credentials stored in the system Keychain.</p>
                     <div class="product-cta-row">
-                        <a href="#features" class="cta-button">See features</a>
+                        <button type="button" class="cta-button primary" data-apply-open>Get started</button>
+                        <a href="#features" class="cta-button secondary">See features</a>
                     </div>
                 </div>
             </div>
@@ -387,8 +825,8 @@
 
                 <div class="feature-tile">
                     <span class="icon">🍎</span>
-                    <h3>Native macOS menu-bar app</h3>
-                    <p>Optional self-contained <code>.app</code> bundle that embeds Python, runs the server in the background, and lives quietly in the menu bar — Open / Restart / Logs / Quit.</p>
+                    <h3>Native macOS app</h3>
+                    <p>A self-contained Mac app that runs quietly in the background and stays out of your way. Open it when you need it; your schedule keeps running when you don't.</p>
                 </div>
             </div>
         </section>
@@ -467,6 +905,7 @@
             <div class="container product-final-cta">
                 <h2>Ship faster, with less ceremony</h2>
                 <p>Runs entirely on your own hardware.</p>
+                <p><button type="button" class="cta-button primary" data-apply-open>Get started</button></p>
                 <p class="meta">Requires macOS 14+ and an Anthropic API key.</p>
             </div>
         </section>
@@ -496,5 +935,351 @@
             <p>YouTube is a trademark of Google LLC.</p>
         </div>
     </aside>
+    <dialog id="get-started-dialog" class="apply-dialog" aria-labelledby="apply-title">
+        <div class="apply-card">
+            <button type="button" class="apply-close" data-apply-close aria-label="Close">&times;</button>
+            <form id="apply-form" novalidate>
+                <div class="apply-progress" aria-hidden="true"><span></span><span></span><span></span></div>
+
+                <section class="apply-step is-active" data-step="about">
+                    <p class="apply-step-label">Step 1 of 3</p>
+                    <h2 id="apply-title">Tell us about yourself</h2>
+                    <p class="apply-intro">We're onboarding creators in small batches. A few details puts you in the queue.</p>
+
+                    <div class="apply-field is-visible">
+                        <label for="apply-first-name">Name</label>
+                        <div class="apply-row">
+                            <input class="apply-input" id="apply-first-name" name="firstName" autocomplete="given-name" placeholder="First" required maxlength="100">
+                            <input class="apply-input" id="apply-last-name" name="lastName" autocomplete="family-name" placeholder="Last" required maxlength="100" aria-label="Last name">
+                        </div>
+                    </div>
+                    <div class="apply-field" data-complete="optional">
+                        <label for="apply-company">Company <span class="optional">(optional)</span></label>
+                        <input class="apply-input" id="apply-company" name="company" autocomplete="organization" placeholder="Studio, brand, or just you" maxlength="200">
+                    </div>
+                    <div class="apply-field" data-complete="email">
+                        <label for="apply-email">Email address</label>
+                        <input class="apply-input" id="apply-email" name="email" type="email" autocomplete="email" placeholder="you@example.com" required maxlength="254">
+                    </div>
+                    <div class="apply-field apply-actions">
+                        <span class="apply-hint">Next: your audience</span>
+                        <button type="button" class="apply-button" data-apply-next>Continue</button>
+                    </div>
+                </section>
+
+                <section class="apply-step" data-step="audience">
+                    <p class="apply-step-label">Step 2 of 3</p>
+                    <h2>Where's your audience?</h2>
+                    <p class="apply-intro">Pick the bracket that fits each platform. Handles are optional but help us find you.</p>
+                    <div class="apply-field apply-actions" data-platform-fields-precede>
+                        <span class="apply-hint">Next: how to reach you</span>
+                        <button type="button" class="apply-button" data-apply-next>Continue</button>
+                    </div>
+                </section>
+
+                <section class="apply-step" data-step="contact">
+                    <p class="apply-step-label">Step 3 of 3</p>
+                    <h2>How can we reach you?</h2>
+                    <p class="apply-intro">We'll only use this to follow up on your application.</p>
+
+                    <div class="apply-field is-visible" data-complete="phone">
+                        <label for="apply-phone">Phone number</label>
+                        <input class="apply-input" id="apply-phone" name="phone" type="tel" autocomplete="tel" placeholder="+1 555 123 4567" required maxlength="30">
+                    </div>
+                    <div class="apply-field">
+                        <label for="apply-country">Country</label>
+                        <select class="apply-input" id="apply-country" name="countryCode" autocomplete="country" required>
+                            <option value="" disabled selected>Choose a country</option>
+                        </select>
+                    </div>
+                    <div class="apply-field" data-complete="optional">
+                        <label for="apply-comments">Anything else? <span class="optional">(optional)</span></label>
+                        <textarea class="apply-input" id="apply-comments" name="comments" placeholder="Questions, what you're publishing, how you'd use it…" maxlength="2000"></textarea>
+                    </div>
+                    <div class="apply-field apply-actions">
+                        <span class="apply-hint">That's everything.</span>
+                        <button type="submit" class="apply-button" data-apply-finish>Finish</button>
+                    </div>
+                    <p class="apply-error" role="alert" data-apply-error></p>
+                </section>
+
+                <section class="apply-step apply-success" data-step="done">
+                    <svg class="clock" viewBox="0 0 96 96" aria-hidden="true">
+                        <circle cx="48" cy="48" r="44" fill="rgba(0, 255, 157, 0.06)" stroke="#00ff9d" stroke-width="3"/>
+                        <g stroke="rgba(255, 255, 255, 0.4)" stroke-width="2.5" stroke-linecap="round">
+                            <line x1="48" y1="10" x2="48" y2="17"/>
+                            <line x1="86" y1="48" x2="79" y2="48"/>
+                            <line x1="48" y1="86" x2="48" y2="79"/>
+                            <line x1="10" y1="48" x2="17" y2="48"/>
+                        </g>
+                        <line class="hand hour" x1="48" y1="48" x2="48" y2="30" stroke="#ffffff" stroke-width="4" stroke-linecap="round"/>
+                        <line class="hand minute" x1="48" y1="48" x2="48" y2="20" stroke="#00ff9d" stroke-width="3" stroke-linecap="round"/>
+                        <circle cx="48" cy="48" r="3.5" fill="#00ff9d"/>
+                    </svg>
+                    <h2>Application received</h2>
+                    <p>Your application will be reviewed within 7 days.</p>
+                    <button type="button" class="apply-button" data-apply-close>Done</button>
+                </section>
+            </form>
+        </div>
+    </dialog>
+
+    <script type="module">
+        import { COUNTRIES, NOT_ON_PLATFORM, PLATFORMS, isPlausibleEmailAddress, isPlausiblePhoneNumber } from "./application-form-options.js";
+
+        const APPLY_ENDPOINT = "/apps/scheduler/apply";
+        const dialog = document.getElementById("get-started-dialog");
+        const form = document.getElementById("apply-form");
+        const steps = Array.from(form.querySelectorAll(".apply-step"));
+        const progressSegments = Array.from(form.querySelectorAll(".apply-progress span"));
+        const errorMessage = form.querySelector("[data-apply-error]");
+        const finishButton = form.querySelector("[data-apply-finish]");
+        const phoneInput = document.getElementById("apply-phone");
+        const emailInput = document.getElementById("apply-email");
+
+        buildPlatformFields();
+        buildCountryOptions();
+
+        document.querySelectorAll("[data-apply-open]").forEach((trigger) => {
+            trigger.addEventListener("click", (event) => {
+                event.preventDefault();
+                dialog.showModal();
+                focusFirstInput(activeStep());
+            });
+        });
+
+        dialog.querySelectorAll("[data-apply-close]").forEach((closer) => {
+            closer.addEventListener("click", () => dialog.close());
+        });
+
+        dialog.addEventListener("click", (event) => {
+            if (event.target === dialog) dialog.close();
+        });
+
+        dialog.addEventListener("close", () => {
+            if (activeStep().dataset.step === "done") resetForm();
+        });
+
+        form.addEventListener("input", (event) => fieldChanged(event.target));
+        form.addEventListener("change", (event) => fieldChanged(event.target));
+        form.addEventListener("focusout", (event) => {
+            const field = event.target.closest(".apply-field");
+            if (field && field.dataset.complete === "optional") revealFieldAfter(field);
+        });
+
+        form.addEventListener("keydown", (event) => {
+            const field = event.target.closest(".apply-field");
+            if (!field) return;
+            if (event.key === "Tab" && !event.shiftKey && field.dataset.complete === "optional") {
+                revealFieldAfter(field);
+                return;
+            }
+            if (event.key !== "Enter" || event.target.tagName !== "INPUT") return;
+            event.preventDefault();
+            if (field.dataset.complete === "optional") revealFieldAfter(field);
+            if (isFieldComplete(field)) focusFirstInput(nextField(field));
+        });
+
+        form.querySelectorAll("[data-apply-next]").forEach((button) => {
+            button.addEventListener("click", () => advanceStep());
+        });
+
+        form.addEventListener("submit", (event) => {
+            event.preventDefault();
+            submitApplication();
+        });
+
+        function fieldChanged(target) {
+            const field = target.closest(".apply-field");
+            if (!field) return;
+            if (isFieldComplete(field)) revealFieldAfter(field);
+            refreshActionButton(activeStep());
+        }
+
+        /* A field counts as complete once every required control in it is
+         * valid; optional controls inside it (a platform handle) don't count.
+         * Optional fields complete on their first keystroke, on Enter, on Tab,
+         * or when focus leaves them, so an empty answer never blocks the flow. */
+        function isFieldComplete(field) {
+            const controls = Array.from(field.querySelectorAll("input, select, textarea"));
+            switch (field.dataset.complete) {
+                case "optional":
+                    return controls.some((control) => control.value.trim() !== "");
+                case "email":
+                    return isPlausibleEmailAddress(emailInput.value.trim());
+                case "phone":
+                    return isPlausiblePhoneNumber(phoneInput.value.trim());
+                default:
+                    return controls
+                        .filter((control) => control.required)
+                        .every((control) => control.checkValidity() && (control.type === "radio" || control.value.trim() !== ""));
+            }
+        }
+
+        /* Reveals the field after `field`. An optional field never hides the
+         * step's button behind it, since nothing forces the user to touch it. */
+        function revealFieldAfter(field) {
+            const next = nextField(field);
+            if (!next || next.classList.contains("is-visible")) return;
+            next.classList.add("is-visible");
+            const afterNext = nextField(next);
+            if (next.dataset.complete === "optional" && afterNext && afterNext.classList.contains("apply-actions")) {
+                afterNext.classList.add("is-visible");
+            }
+            refreshActionButton(activeStep());
+        }
+
+        function nextField(field) {
+            const next = field.nextElementSibling;
+            return next && next.classList.contains("apply-field") ? next : null;
+        }
+
+        function refreshActionButton(step) {
+            const button = step.querySelector(".apply-actions .apply-button");
+            if (!button) return;
+            const visibleFields = Array.from(step.querySelectorAll(".apply-field.is-visible")).filter((field) => !field.classList.contains("apply-actions"));
+            button.disabled = !visibleFields.every((field) => field.dataset.complete === "optional" || isFieldComplete(field));
+        }
+
+        function activeStep() {
+            return steps.find((step) => step.classList.contains("is-active"));
+        }
+
+        function advanceStep() {
+            const current = activeStep();
+            const index = steps.indexOf(current);
+            const next = steps[index + 1];
+            if (!next) return;
+            current.classList.remove("is-active");
+            next.classList.add("is-active");
+            progressSegments.forEach((segment, segmentIndex) => segment.classList.toggle("is-done", segmentIndex <= index));
+            dialog.querySelector(".apply-card").scrollTop = 0;
+            refreshActionButton(next);
+            focusFirstInput(next);
+        }
+
+        function focusFirstInput(container) {
+            if (!container) return;
+            const scope = container.classList.contains("apply-field") ? container : container.querySelector(".apply-field.is-visible");
+            const control = scope && scope.querySelector("input, select, textarea, button");
+            if (control) control.focus({ preventScroll: true });
+        }
+
+        async function submitApplication() {
+            if (finishButton.disabled) return;
+            hideError();
+            finishButton.disabled = true;
+            finishButton.textContent = "Sending…";
+            try {
+                const response = await fetch(APPLY_ENDPOINT, {
+                    method: "POST",
+                    headers: { "content-type": "application/json" },
+                    body: JSON.stringify(collectApplication()),
+                });
+                if (response.status === 201) {
+                    advanceStep();
+                    return;
+                }
+                showError(await errorTextFrom(response));
+            } catch (_) {
+                showError("We couldn't reach the server. Check your connection and try again.");
+            } finally {
+                finishButton.textContent = "Finish";
+                refreshActionButton(activeStep());
+            }
+        }
+
+        async function errorTextFrom(response) {
+            try {
+                const body = await response.json();
+                if (body && typeof body.error === "string") return body.error;
+            } catch (_) {
+                // Not JSON; fall through to the generic message.
+            }
+            return `Something went wrong (HTTP ${response.status}). Please try again.`;
+        }
+
+        function collectApplication() {
+            const data = new FormData(form);
+            const platforms = {};
+            for (const platform of PLATFORMS) {
+                platforms[platform.id] = {
+                    followers: data.get(`followers-${platform.id}`),
+                    handle: String(data.get(`handle-${platform.id}`) || "").trim(),
+                };
+            }
+            return {
+                firstName: String(data.get("firstName")).trim(),
+                lastName: String(data.get("lastName")).trim(),
+                company: String(data.get("company")).trim(),
+                email: String(data.get("email")).trim(),
+                phone: String(data.get("phone")).trim(),
+                countryCode: data.get("countryCode"),
+                comments: String(data.get("comments")).trim(),
+                platforms,
+            };
+        }
+
+        function showError(text) {
+            errorMessage.textContent = text;
+            errorMessage.classList.add("is-visible");
+        }
+
+        function hideError() {
+            errorMessage.textContent = "";
+            errorMessage.classList.remove("is-visible");
+        }
+
+        function resetForm() {
+            form.reset();
+            hideError();
+            steps.forEach((step, index) => step.classList.toggle("is-active", index === 0));
+            progressSegments.forEach((segment) => segment.classList.remove("is-done"));
+            form.querySelectorAll(".apply-field").forEach((field) => {
+                const isFirstInStep = field.parentElement.querySelector(".apply-field") === field;
+                field.classList.toggle("is-visible", isFirstInStep);
+            });
+            steps.forEach(refreshActionButton);
+        }
+
+        /* Platform fieldsets are inserted as siblings ahead of the step's
+         * button row so the reveal chain runs straight through to it. */
+        function buildPlatformFields() {
+            const actionsRow = form.querySelector("[data-platform-fields-precede]");
+            PLATFORMS.forEach((platform, index) => {
+                const field = document.createElement("fieldset");
+                field.className = "apply-field apply-platform" + (index === 0 ? " is-visible" : "");
+                const rangeName = `followers-${platform.id}`;
+                const pills = platform.ranges.map((range) => pillMarkup(rangeName, range.value, range.label, ""))
+                    .concat(pillMarkup(rangeName, NOT_ON_PLATFORM, `Not on ${platform.name}`, "is-muted"))
+                    .join("");
+                field.innerHTML = `
+                    <legend>${platform.name}</legend>
+                    <p class="apply-sublabel">Followers</p>
+                    <div class="apply-pills" role="radiogroup" aria-label="${platform.name} followers">${pills}</div>
+                    <div class="apply-handle">
+                        <span class="at" aria-hidden="true">@</span>
+                        <input class="apply-input" name="handle-${platform.id}" placeholder="${platform.handlePlaceholder} (optional)" aria-label="${platform.name} handle" autocomplete="off" autocapitalize="off" spellcheck="false" maxlength="100">
+                    </div>`;
+                actionsRow.before(field);
+            });
+        }
+
+        function pillMarkup(name, value, label, extraClass) {
+            return `<label class="apply-pill ${extraClass}"><input type="radio" name="${name}" value="${value}" required><span>${label}</span></label>`;
+        }
+
+        function buildCountryOptions() {
+            const select = document.getElementById("apply-country");
+            for (const [code, name] of COUNTRIES) {
+                const option = document.createElement("option");
+                option.value = code;
+                option.textContent = name;
+                select.appendChild(option);
+            }
+        }
+
+        steps.forEach(refreshActionButton);
+    </script>
 </body>
 </html>
