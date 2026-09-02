@@ -28,10 +28,13 @@
   // Per-IP throttle in front of the public application endpoint. `period` may
   // only be 10 or 60; counters are per Cloudflare location, so the effective
   // global rate is higher than `limit` and this is a flood brake, not a quota.
+  // The namespace is account-wide, so this deliberately isn't the "1001" from
+  // Cloudflare's docs — another Worker here starting from the same example
+  // would otherwise share these counters.
   "ratelimits": [
     {
       "name": "APPLY_RATE_LIMITER",
-      "namespace_id": "1001",
+      "namespace_id": "7742",
       "simple": {
         "limit": 5,
         "period": 60
