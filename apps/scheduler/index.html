@@ -613,6 +613,12 @@
             box-shadow: 0 0 0 2px var(--color-primary);
         }
 
+        /* The opt-out pill sits alone on the first row; "Followers" starts the range rows. */
+        .apply-opt-out .apply-sublabel {
+            flex-basis: 100%;
+            margin: var(--space-xs) 0 0;
+        }
+
         .apply-pill.is-muted span {
             color: var(--color-text-secondary);
             border-style: dashed;
@@ -1355,13 +1361,15 @@
                 const field = document.createElement("fieldset");
                 field.className = "apply-field apply-platform" + (index === 0 ? " is-visible" : "");
                 const rangeName = `followers-${platform.id}`;
-                const pills = platform.ranges.map((range) => pillMarkup(rangeName, range.value, range.label, ""))
-                    .concat(pillMarkup(rangeName, NOT_ON_PLATFORM, `Not on ${platform.name}`, "is-muted"))
-                    .join("");
+                const rangePills = platform.ranges.map((range) => pillMarkup(rangeName, range.value, range.label, "")).join("");
+                const optOutPill = pillMarkup(rangeName, NOT_ON_PLATFORM, `I don't use ${platform.name}`, "is-muted");
                 field.innerHTML = `
                     <legend>${platform.name}</legend>
-                    <p class="apply-sublabel">Followers</p>
-                    <div class="apply-pills" role="radiogroup" aria-label="${platform.name} followers">${pills}</div>
+                    <div class="apply-pills apply-opt-out" role="radiogroup" aria-label="${platform.name} followers">
+                        ${optOutPill}
+                        <p class="apply-sublabel">Followers</p>
+                        ${rangePills}
+                    </div>
                     <div class="apply-handle">
                         <span class="at" aria-hidden="true">@</span>
                         <input class="apply-input" name="handle-${platform.id}" placeholder="${platform.handlePlaceholder} (optional)" aria-label="${platform.name} handle" autocomplete="off" autocapitalize="off" spellcheck="false" maxlength="100">

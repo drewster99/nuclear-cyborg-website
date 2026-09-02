@@ -32,9 +32,9 @@ export const NOT_ON_PLATFORM = "none";
 
 /** Platforms the form asks about, in the order they are shown. */
 export const PLATFORMS = [
-    { id: "youtube", name: "YouTube", handlePlaceholder: "channel handle", ranges: LARGE_AUDIENCE_RANGES },
     { id: "tiktok", name: "TikTok", handlePlaceholder: "username", ranges: LARGE_AUDIENCE_RANGES },
     { id: "instagram", name: "Instagram", handlePlaceholder: "username", ranges: LARGE_AUDIENCE_RANGES },
+    { id: "youtube", name: "YouTube", handlePlaceholder: "channel handle", ranges: LARGE_AUDIENCE_RANGES },
     { id: "threads", name: "Threads", handlePlaceholder: "username", ranges: SMALL_AUDIENCE_RANGES },
     { id: "x", name: "X", handlePlaceholder: "username", ranges: SMALL_AUDIENCE_RANGES },
     { id: "bluesky", name: "Bluesky", handlePlaceholder: "handle.bsky.social", ranges: SMALL_AUDIENCE_RANGES },
