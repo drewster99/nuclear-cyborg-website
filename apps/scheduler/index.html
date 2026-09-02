@@ -1175,7 +1175,7 @@
         buildPlatformFields();
         buildCountryOptions();
         applyTextLimits();
-        renderTurnstileIfPresent(activeStep());
+        renderTurnstileWhenVisible();
 
         document.querySelectorAll("[data-dialog-open]").forEach((trigger) => {
             trigger.addEventListener("click", (event) => {
@@ -1279,6 +1279,7 @@
             const visibleFields = Array.from(step.querySelectorAll(".apply-field.is-visible")).filter((field) => !field.classList.contains("apply-actions"));
             const answersReady = visibleFields.every((field) => field.dataset.complete === "optional" || isFieldComplete(field));
             button.disabled = !answersReady || !challengePassed(step);
+            renderTurnstileWhenVisible();
         }
 
         /* Only the final step carries a challenge; the others pass straight through. */
@@ -1286,11 +1287,14 @@
             return step.querySelector("[data-turnstile]") === null || turnstileToken() !== "";
         }
 
-        /* Rendered only once the applicant reaches the step that carries it:
-         * Turnstile won't lay out inside a display:none step, and a challenge
-         * solved at page load can expire before it is ever submitted. */
-        function renderTurnstileIfPresent(step) {
-            if (step.querySelector("[data-turnstile]")) renderTurnstile();
+        /* Rendered only once its own container is on screen. Turnstile lays out
+         * to zero size inside a hidden element and never recovers, and the row
+         * holding it is revealed later than the step that contains it. Solving
+         * at page load would also risk the challenge expiring before use. */
+        function renderTurnstileWhenVisible() {
+            const holder = document.querySelector("[data-turnstile]");
+            if (!holder || holder.getBoundingClientRect().width === 0) return;
+            renderTurnstile();
         }
 
         async function renderTurnstile() {
@@ -1333,7 +1337,6 @@
             next.classList.add("is-active");
             progressSegments.forEach((segment, segmentIndex) => segment.classList.toggle("is-done", segmentIndex <= index));
             dialog.querySelector(".apply-card").scrollTop = 0;
-            renderTurnstileIfPresent(next);
             refreshActionButton(next);
             focusFirstInput(next);
         }
