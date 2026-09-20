@@ -17,8 +17,15 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../../css/ncc.css?v=1">
     <link rel="canonical" href="https://nuclearcyborg.com/apps/scheduler/">
+    <link rel="icon" type="image/png" href="icon.png">
+    <link rel="apple-touch-icon" href="icon.png">
     <style>
         /* Page-specific styles — keeps shared ncc.css untouched */
+        /* The product page has no site logo, so the nav links stay on the right */
+        .product-hero nav {
+            justify-content: flex-end;
+        }
+
         .product-hero {
             padding-bottom: var(--space-xl);
         }
@@ -858,10 +865,6 @@
     <div class="hero product-hero">
         <header class="container">
             <nav>
-                <a href="/" class="logo">
-                    <img src="../../images/logo.svg" alt="Nuclear Cyborg Corp logo" class="logo-image">
-                    <span class="logo-text">Nuclear Cyborg</span>
-                </a>
                 <div class="nav-links">
                     <a href="/" class="nav-link">Home</a>
                     <a href="mailto:support@nuclearcyborg.com?subject=Drew%27s%20Video%20Socials%20Scheduler" class="contact-button">Contact</a>
