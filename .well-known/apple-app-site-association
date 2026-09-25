@@ -1,21 +1,32 @@
 {
-   "applinks": {
-      "details": [
+   "applinks" : {
+      "details" : [
          {
-            "appID": "P8MA38JTXY.com.AndrewBenson.ColorCannon",
-            "components": [
+            "appID" : "P8MA38JTXY.com.AndrewBenson.ColorCannon",
+            "components" : [
                {
-                  "/": "/color-match-cannons"
+                  "/" : "/color-match-cannons"
                }
             ],
-            "default": {
-               "caseSensitive": false
+            "default" : {
+               "caseSensitive" : false
+            }
+         },
+         {
+            "appID" : "P8MA38JTXY.com.nuclearcyborg.visualtimerforautisnm",
+            "components" : [
+               {
+                  "/" : "/visualtimer/*"
+               }
+            ],
+            "default" : {
+               "caseSensitive" : false
             }
          }
       ]
    },
-   "webcredentials": {
-      "apps": [
+   "webcredentials" : {
+      "apps" : [
          "P8MA38JTXY.com.nuclearcyborg.dmof9"
       ]
    }
