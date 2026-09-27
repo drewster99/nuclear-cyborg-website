@@ -1,0 +1,33 @@
+{
+  "client_id": "https://nuclearcyborg.com/apps/scheduler/bluesky-client-metadata.json",
+  "client_name": "Drew's Video Socials Scheduler",
+  "client_uri": "https://nuclearcyborg.com/apps/scheduler",
+  "application_type": "web",
+  "grant_types": [
+    "authorization_code",
+    "refresh_token"
+  ],
+  "response_types": [
+    "code"
+  ],
+  "redirect_uris": [
+    "https://nuclearcyborg.com/apps/scheduler/callback-bluesky-redirect"
+  ],
+  "scope": "atproto transition:generic",
+  "token_endpoint_auth_method": "private_key_jwt",
+  "token_endpoint_auth_signing_alg": "ES256",
+  "dpop_bound_access_tokens": true,
+  "jwks": {
+    "keys": [
+      {
+        "kty": "EC",
+        "crv": "P-256",
+        "x": "6EVqJ89esATYMzt6zL3z5O2wT-aPMg8SKgvCcwAe1EA",
+        "y": "QHBJSprs_3amcL2A09P4Yl5vUgTM8sCu3d4RAbprzmI",
+        "kid": "JIq_oyrSwQaUsFU1G4y_jNDJX5rPmIkXk88r21rxwTM",
+        "alg": "ES256",
+        "use": "sig"
+      }
+    ]
+  }
+}
