@@ -15,6 +15,7 @@
 ## Company
 
 - [Home](https://nuclearcyborg.com/): Overview of Nuclear Cyborg Corp's AI and software consulting services.
+- [About](https://nuclearcyborg.com/about): The company and its founder, Andrew Benson.
 - [Contact](https://nuclearcyborg.com/contact): Request a consultation.
 
 ## Apps

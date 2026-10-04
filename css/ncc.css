@@ -652,3 +652,31 @@ footer {
     position: relative;
     z-index: 1;
 }
+
+/* About page */
+.service-intro p + p {
+    margin-top: var(--space-sm);
+}
+
+.service-intro a,
+.feature-card a {
+    color: var(--color-primary);
+}
+
+a.tech-item {
+    display: block;
+    text-decoration: none;
+}
+
+/* The nav gained an About link; let it wrap rather than push Contact Us off narrow screens */
+@media (max-width: 600px) {
+    nav {
+        flex-wrap: wrap;
+        row-gap: var(--space-sm);
+    }
+
+    .nav-links {
+        gap: var(--space-sm);
+        margin-left: auto;
+    }
+}
