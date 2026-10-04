@@ -1,0 +1,37 @@
+# Nuclear Cyborg Corp
+
+> Nuclear Cyborg Corp is an AI and software consulting company and an Apple-platform app publisher, founded by Andrew Benson. It offers AI integration and development (LLM fine-tuning, retrieval augmented generation, custom AI agents), enterprise AI consulting, and software architecture services.
+
+- Consultation requests go through the contact page.
+- The company publishes iOS and macOS apps on the App Store under the developer name "Nuclear Cyborg Corp".
+- IAP Buddy was formerly named Pricing for App Store Connect.
+
+## Services
+
+- [AI Development & Integration](https://nuclearcyborg.com/services/ai-development): LLM fine-tuning, RAG systems, custom AI agents, on-device AI, vector database integration and multi-modal AI.
+- [Enterprise AI Consulting](https://nuclearcyborg.com/services/ai-consulting): AI strategy, workflow automation, knowledge management and AI infrastructure planning.
+- [Software Architecture](https://nuclearcyborg.com/services/software-architecture): System design, technology stack and performance optimization, code quality assessment, security review and scalability.
+
+## Company
+
+- [Home](https://nuclearcyborg.com/): Overview of Nuclear Cyborg Corp's AI and software consulting services.
+- [Contact](https://nuclearcyborg.com/contact): Request a consultation.
+
+## Apps
+
+- [Drew's Video Socials Scheduler](https://nuclearcyborg.com/apps/scheduler/): Local-first macOS publishing workstation for YouTube creators, with AI-generated descriptions, multi-platform social scheduling and comment moderation.
+- [IAP Buddy](https://apps.apple.com/us/app/iap-buddy/id6741457652): Mac app for viewing and updating prices of apps, in-app purchases and subscriptions through the App Store Connect API.
+- [Nuclear Cyborg Corp on the App Store](https://apps.apple.com/us/developer/nuclear-cyborg-corp/id910010732): All apps the company publishes.
+
+## Founder
+
+- [Andrew Benson on GitHub](https://github.com/drewster99): Open-source projects, including MCP servers and Swift packages.
+- [Andrew Benson on LinkedIn](https://www.linkedin.com/in/drewbensondev/): Professional profile.
+- [DrewBensonCodes on YouTube](https://www.youtube.com/@DrewBensonCodes): Andrew's YouTube channel.
+- [Drew and Dan in the Morning](https://podcasts.apple.com/us/podcast/drew-and-dan-in-the-morning/id1894918993): Podcast co-hosted by Andrew; "Dan and Drew talk tech, projects, problems and Apple pie."
+
+## Optional
+
+- [Privacy Policy](https://nuclearcyborg.com/privacy): How Nuclear Cyborg Corp handles personal information.
+- [Terms of Use](https://nuclearcyborg.com/terms): Terms governing the company's websites, services and software.
+- [Refund Policy](https://nuclearcyborg.com/refunds): Refunds for App Store purchases and license keys.
