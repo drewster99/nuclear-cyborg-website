@@ -1,0 +1,15 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "nuclear-cyborg-corp-redirect",
+  "main": "worker/corp-redirect.mjs",
+  "compatibility_date": "2026-10-04",
+  "workers_dev": false,
+  "preview_urls": false,
+  // Deploy by hand with `npx wrangler deploy --config wrangler.corp-redirect.jsonc`.
+  // Workers Builds for the site must keep running plain `npx wrangler deploy`,
+  // or it would upload this Worker under the site's name.
+  "routes": [
+    { "pattern": "nuclearcyborgcorp.com", "custom_domain": true },
+    { "pattern": "www.nuclearcyborgcorp.com", "custom_domain": true }
+  ]
+}
