@@ -10,6 +10,6 @@
     "applications": "db/list-applications.sh"
   },
   "devDependencies": {
-    "wrangler": "4.128.0"
+    "wrangler": "4.162.0"
   }
 }
